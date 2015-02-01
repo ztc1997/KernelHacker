@@ -39,4 +39,8 @@
         <item name="android:gravity">center</item>
     </style>
     
+    <style name="CardTitleTextView" parent="TitleTextView">
+        <item name="android:layout_gravity">center</item>
+    </style>
+    
 </resources>

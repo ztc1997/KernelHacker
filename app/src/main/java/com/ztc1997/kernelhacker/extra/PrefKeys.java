@@ -14,4 +14,7 @@ public interface PrefKeys {
     public String T2W_RANGE_Y_FROM = "pref_t2w_range_y_from";
     public String T2W_RANGE_X_TO = "pref_t2w_range_x_to";
     public String T2W_RANGE_Y_TO = "pref_t2w_range_y_to";
+    
+    String CPU_MAX_FREQ = "pref_cpu_max_freq";
+    String CPU_MIN_FREQ = "pref_cpu_min_freq";
 }

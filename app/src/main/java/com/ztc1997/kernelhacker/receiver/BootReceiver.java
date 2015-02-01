@@ -35,13 +35,13 @@ public class BootReceiver extends BroadcastReceiver {
                 public void run() {
                     super.run();
                     String i = (preferences.getBoolean(PrefKeys.T2W, false) ? 1 : 0) + "";
-                    if (!(Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i) == 0
-                            |Utils.writeFileWithRoot(Paths.T2W_ENABLE, i) == 0
-                            |Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getString(PrefKeys.T2W_INTERAL, "20")) == 0
-                            |Utils.writeFileWithRoot(Paths.T2W_X_FROM, preferences.getInt(PrefKeys.T2W_RANGE_X_FROM, 0) + "") == 0
-                            |Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getInt(PrefKeys.T2W_RANGE_Y_FROM, 0) + "") == 0
-                            |Utils.writeFileWithRoot(Paths.T2W_X_TO, preferences.getInt(PrefKeys.T2W_RANGE_X_TO, 719) + "") == 0
-                            |Utils.writeFileWithRoot(Paths.T2W_Y_TO, preferences.getInt(PrefKeys.T2W_RANGE_Y_TO, 1327) + "") == 0))
+                    if (!(Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i)
+                            |Utils.writeFileWithRoot(Paths.T2W_ENABLE, i)
+                            |Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getString(PrefKeys.T2W_INTERAL, "20"))
+                            |Utils.writeFileWithRoot(Paths.T2W_X_FROM, preferences.getString(PrefKeys.T2W_RANGE_X_FROM, "0"))
+                            |Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getString(PrefKeys.T2W_RANGE_Y_FROM, "0"))
+                            |Utils.writeFileWithRoot(Paths.T2W_X_TO, preferences.getString(PrefKeys.T2W_RANGE_X_TO, "719"))
+                            |Utils.writeFileWithRoot(Paths.T2W_Y_TO, preferences.getString(PrefKeys.T2W_RANGE_Y_TO, "1327"))))
                         showNotifition();
                 }
             }.start();

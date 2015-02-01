@@ -4,7 +4,8 @@ package com.ztc1997.kernelhacker.extra;
  * Created by Alex on 2015/1/17.
  */
 public interface Paths {
-    String KERNEL_VERSION = "/proc/version";
+    String INFO_KERNEL_VERSION = "/proc/version";
+    String INFO_CPU_TEMP = "/sys/class/thermal/thermal_zone0/temp";
     
     String TOUCHSCREEN_SYS_DIR = "/sys/class/input/input2/";
     String T2W_PREVENT_SLEEP = TOUCHSCREEN_SYS_DIR + "prevent_sleep";

@@ -22,5 +22,9 @@
     <string name="info_cpu_time_in_state">CPU Time In State</string>
     <string name="info_kernel_version">Kernel Version</string>
     <string name="info_kernel_version_unable">Unable To Get Kernel Version</string>
+    <string name="info_device_state">Device State</string>
+    <string name="info_device_state_cpu_freq">Cpu Frequency: </string>
+    <string name="info_device_state_cpu_temp">Cpu Temp: </string>
+    <string name="info_device_state_batery_temp">Batery Temp: </string>
 
 </resources>

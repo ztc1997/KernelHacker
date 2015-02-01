@@ -22,8 +22,8 @@ import java.util.Map;
  */
 public class Utils {
     
-    public static int writeFileWithRoot(String path, String value){
-        return MyApplication.getRootUtil().execute("echo " + value + " > " + path, null);
+    public static boolean writeFileWithRoot(String path, String value){
+        return MyApplication.getRootUtil().execute("echo " + value + " > " + path, null) == 0;
     }
     
     public static String readOneLine(String strFilePath)

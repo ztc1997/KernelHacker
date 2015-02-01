@@ -1,9 +1,16 @@
 package com.ztc1997.kernelhacker.ui;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +18,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.ChartData;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.Legend;
 import com.github.mikephil.charting.utils.XLabels;
 import com.ztc1997.kernelhacker.R;
 import com.ztc1997.kernelhacker.extra.Frequency;
+import com.ztc1997.kernelhacker.extra.Paths;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Stats;
 import com.ztc1997.kernelhacker.extra.Utils;
+import com.ztc1997.kernelhacker.widget.InfoProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,10 @@ public class InfoFragment extends Fragment {
     private View rootView;
     private TextView kernelName;
     private BarChart cpuChart;
+    private InfoProgressBar cpuTemp, batteryTemp, cpuFreq;
     private SharedPreferences preferences;
+    private Intent batteryIntent;
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public InfoFragment() {
         // Required empty public constructor
@@ -58,8 +64,12 @@ public class InfoFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_info, container, false);
         cpuChart = (BarChart) rootView.findViewById(R.id.cpu_chart);
         kernelName = (TextView) rootView.findViewById(R.id.kernel_name);
+        cpuTemp = (InfoProgressBar) rootView.findViewById(R.id.info_cpu_temp);
+        cpuFreq = (InfoProgressBar) rootView.findViewById(R.id.info_cpu_freq);
+        batteryTemp = (InfoProgressBar) rootView.findViewById(R.id.info_battery_temp);
         kernelName.setText(preferences.getString(PrefKeys.KERNEL_VERSION, getString(R.string.info_kernel_version_unable)));
         cpuChartSetup();
+        deviceStateSetup();
         return rootView;
     }
 
@@ -98,7 +108,55 @@ public class InfoFragment extends Fragment {
         cpuChart.setDrawBorder(false);
         cpuChart.setDrawLegend(false);
         cpuChart.getXLabels().setPosition(XLabels.XLabelPosition.BOTTOM);
-        cpuChart.animateY(900);
     }
+    
+    private void deviceStateSetup(){
+        cpuFreq.setMin(Integer.parseInt(preferences.getString(PrefKeys.CPU_MIN_FREQ, "0")) / 1000);
+        cpuFreq.setMax(Integer.parseInt(preferences.getString(PrefKeys.CPU_MAX_FREQ, "0")) / 1000);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                while (true){
+                    final int cpuTmp = Integer.parseInt(Utils.readOneLine(Paths.INFO_CPU_TEMP));
+                    String cpufrqStr = Utils.readOneLine(Paths.SCALING_CUR_FREQ);
+                    final int cpufrq = Integer.parseInt(cpufrqStr.substring(0, cpufrqStr.length() - 3));
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            int batteryTmp = batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,0) / 10;
+                            batteryTemp.setValue(batteryTmp);
+                            cpuTemp.setValue(cpuTmp);
+                            cpuFreq.setValue(cpufrq);
+                        }
+                    });
+                    try {
+                        sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        batteryIntent = getActivity().registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(batteryReceiver);
+    }
+
+    BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            batteryTemp.setValue(intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, batteryTemp.getValue() * 10) / 10);
+        }
+    };
 
 }

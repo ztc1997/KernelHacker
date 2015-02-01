@@ -8,8 +8,7 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/TitleTextView"
-            android:layout_gravity="center_horizontal"
+            style="@style/CardTitleTextView"
             android:text="@string/info_cpu_time_in_state"/>
 
         <com.github.mikephil.charting.charts.BarChart
