@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <color name="main_dark">@android:color/holo_green_dark</color>
+    <color name="main_light">@android:color/holo_green_light</color>
+    <color name="transparent">#00000000</color>
+    <color name="dim_lighter_gray">#80E0E0E0</color>
+
+</resources>

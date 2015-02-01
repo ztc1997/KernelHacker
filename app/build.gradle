@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+    defaultConfig {
+        applicationId "com.ztc1997.kernelhacker"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName '0.1'
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    //compile 'com.android.support:support-v13:21.0.3'
+    compile 'com.android.support:support-v13:21.0.3'
+    compile project(':FloatingActionButton-library')
+    compile 'com.android.support:cardview-v7:21.0.3'
+    compile project(':MPChartLib')
+    compile project(':MaterialDesignLib')
+}
