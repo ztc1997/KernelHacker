@@ -5,7 +5,6 @@ import java.util.Locale;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gc.materialdesign.widgets.Dialog;
+import com.gc.materialdesign.widgets.ProgressDialog;
 import com.ztc1997.kernelhacker.AntiFalseWakeService;
 import com.ztc1997.kernelhacker.MyApplication;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
@@ -215,30 +216,29 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     private void getRoot(){
-        final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setIndeterminate(true);
+        final ProgressDialog dialog = new ProgressDialog(this,getString(R.string.dialog_getting_root_title));
         dialog.setCancelable(false);
-        dialog.setMessage(getString(R.string.dialog_getting_root_title));
         dialog.show();
         new Thread(){
             @Override
             public void run() {
                 super.run();
-                if (MyApplication.getRootUtil() == null){
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        public void run() {
-                            new AlertDialog.Builder(MainActivity.this)
-                                    .setMessage(R.string.toast_getting_root_failed)
-                                    .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            MainActivity.this.finish();
-                                        }
-                                    }).show();
+                final boolean unableRoot = MyApplication.getRootUtil() == null;
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    public void run() {
+                        if (unableRoot) {
+                            Dialog dialog1 = new Dialog(MainActivity.this, getString(R.string.dialog_getting_root_failed_title), getString(R.string.dialog_getting_root_failed_msg));
+                            dialog1.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                }
+                            });
+                            dialog1.show();
                         }
-                    });
-                }
-                dialog.dismiss();
+                        dialog.dismiss();
+                    }
+                });
             }
         }.start();
     }

@@ -16,7 +16,8 @@
     <string name="info_t2w_effective_range">X:%1$s-%2$s Y:%3$s-%4$s</string>
     <string name="dialog_msg_t2w_effective_range">Save effective range?</string>
     <string name="dialog_getting_root_title">Getting ROOT permission</string>
-    <string name="toast_getting_root_failed">Unable to get ROOT permission</string>
+    <string name="dialog_getting_root_failed_title">Applications can not be used</string>
+    <string name="dialog_getting_root_failed_msg">Unable to get ROOT permission</string>
     <string name="notifition_boot_setting_failed_title">Failed when setting on boot</string>
     <string name="notifition_boot_setting_failed_text">Click to open the application</string>
     <string name="info_cpu_time_in_state">CPU Time In State</string>

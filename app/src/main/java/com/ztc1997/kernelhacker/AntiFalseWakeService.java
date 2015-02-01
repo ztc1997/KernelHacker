@@ -142,12 +142,12 @@ public class AntiFalseWakeService extends Service {
         Resources res = this.getResources();
         PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
         Notification.Builder builder = new Notification.Builder(this)
-                .setContentTitle(res.getString(R.string.toast_getting_root_failed))
+                .setContentTitle(res.getString(R.string.dialog_getting_root_failed_msg))
                 .setContentText(res.getString(R.string.app_name))
                 .setContentIntent(pi)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(false)
-                .setTicker(res.getString(R.string.toast_getting_root_failed))
+                .setTicker(res.getString(R.string.dialog_getting_root_failed_msg))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher));
 
