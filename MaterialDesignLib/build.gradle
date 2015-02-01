@@ -33,7 +33,8 @@ ext.issueUrl = 'https://github.com/navasmdc/MaterialDesignLibrary/issues'
 ext.gitUrl = 'https://github.com/navasmdc/MaterialDesignLibrary.git'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:21.+'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile project(':nineoldandroids-2.4.0')
 }
 
 task sourcesJar(type: Jar) {

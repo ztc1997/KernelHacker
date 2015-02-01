@@ -1,1 +1,1 @@
-include ':app', 'FloatingActionButton-library', 'MPChartLib', ':MaterialDesignLib'
+include ':app', 'FloatingActionButton-library', 'MPChartLib', ':MaterialDesignLib', ':nineoldandroids-2.4.0'

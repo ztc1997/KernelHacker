@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.Legend;
+import com.github.mikephil.charting.utils.XLabels;
 import com.ztc1997.kernelhacker.R;
 import com.ztc1997.kernelhacker.extra.Frequency;
 import com.ztc1997.kernelhacker.extra.Stats;
@@ -67,7 +68,7 @@ public class InfoFragment extends Fragment {
             if (percentage == 0)
                 continue;
             xVals.add(frequency.getMHz() / 1000 + "");
-            yVals1.add(new BarEntry(percentage, i));
+            yVals1.add(new BarEntry(percentage * 100, i));
             if (i <= frequencies.size() / 3){
                 colors.add(getResources().getColor(android.R.color.holo_green_dark));
             } else if (i <= frequencies.size() / 3 * 2){
@@ -80,13 +81,15 @@ public class InfoFragment extends Fragment {
         BarDataSet set = new BarDataSet(yVals1, getString(R.string.info_cpu_time_in_state));
         set.setColors(colors);
         BarData data = new BarData(xVals, set);
-        cpuChart.setDescription(getString(R.string.info_cpu_time_in_state));
+        cpuChart.setDescription("");
+        cpuChart.setUnit("%");
         cpuChart.setData(data);
-/*        Legend l = cpuChart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(5f);*/
-        cpuChart.animateXY(900, 900);
+        cpuChart.setTouchEnabled(false);
+        cpuChart.setDrawYValues(false);
+        cpuChart.setDrawBorder(false);
+        cpuChart.setDrawLegend(false);
+        cpuChart.getXLabels().setPosition(XLabels.XLabelPosition.BOTTOM);
+        cpuChart.animateY(900);
     }
 
 }
