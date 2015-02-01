@@ -1,11 +1,14 @@
 package com.ztc1997.kernelhacker.ui;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -20,6 +23,7 @@ import com.github.mikephil.charting.utils.Legend;
 import com.github.mikephil.charting.utils.XLabels;
 import com.ztc1997.kernelhacker.R;
 import com.ztc1997.kernelhacker.extra.Frequency;
+import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Stats;
 import com.ztc1997.kernelhacker.extra.Utils;
 
@@ -33,7 +37,9 @@ import java.util.List;
  */
 public class InfoFragment extends Fragment {
     private View rootView;
+    private TextView kernelName;
     private BarChart cpuChart;
+    private SharedPreferences preferences;
 
     public InfoFragment() {
         // Required empty public constructor
@@ -42,6 +48,7 @@ public class InfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     @Override
@@ -50,6 +57,8 @@ public class InfoFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_info, container, false);
         cpuChart = (BarChart) rootView.findViewById(R.id.cpu_chart);
+        kernelName = (TextView) rootView.findViewById(R.id.kernel_name);
+        kernelName.setText(preferences.getString(PrefKeys.KERNEL_VERSION, getString(R.string.info_kernel_version_unable)));
         cpuChartSetup();
         return rootView;
     }

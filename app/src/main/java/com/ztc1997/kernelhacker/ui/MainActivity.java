@@ -252,6 +252,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private void initSysValues(){
         preferences.edit()
+                .putString(PrefKeys.KERNEL_VERSION, Utils.readOneLine(Paths.KERNEL_VERSION))
                 .putString(PrefKeys.T2W_INTERAL, Utils.readOneLine(Paths.T2W_INTERVAL))
                 .putString(PrefKeys.T2W_RANGE_X_FROM, Utils.readOneLine(Paths.T2W_X_FROM))
                 .putString(PrefKeys.T2W_RANGE_X_TO, Utils.readOneLine(Paths.T2W_X_TO))

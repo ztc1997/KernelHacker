@@ -19,6 +19,8 @@
     <string name="toast_getting_root_failed">Unable to get ROOT permission</string>
     <string name="notifition_boot_setting_failed_title">Failed when setting on boot</string>
     <string name="notifition_boot_setting_failed_text">Click to open the application</string>
-    <string name="info_cpu_time_in_state">CPU time in state</string>
+    <string name="info_cpu_time_in_state">CPU Time In State</string>
+    <string name="info_kernel_version">Kernel Version</string>
+    <string name="info_kernel_version_unable">Unable To Get Kernel Version</string>
 
 </resources>
