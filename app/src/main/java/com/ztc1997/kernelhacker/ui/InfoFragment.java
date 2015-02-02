@@ -55,6 +55,7 @@ public class InfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        updateStatsThread.start();
     }
 
     @Override
@@ -119,15 +120,12 @@ public class InfoFragment extends Fragment {
     public void onResume() {
         super.onResume();
         batteryIntent = getActivity().registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        if (updateStatsThread.isInterrupted())
-            updateStatsThread.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(batteryReceiver);
-        updateStatsThread.interrupt();
     }
     
     private Thread updateStatsThread = new Thread(){
@@ -141,14 +139,18 @@ public class InfoFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        int batteryTmp = batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,0) / 10;
-                        batteryTemp.setValue(batteryTmp);
-                        cpuTemp.setValue(cpuTmp);
-                        cpuFreq.setValue(cpufrq);
+                        try {
+                            int batteryTmp = batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,0) / 10;
+                            batteryTemp.setValue(batteryTmp);
+                            cpuTemp.setValue(cpuTmp);
+                            cpuFreq.setValue(cpufrq);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
                 try {
-                    sleep(2000);
+                    sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
