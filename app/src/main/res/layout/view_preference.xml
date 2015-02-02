@@ -2,23 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <com.gc.materialdesign.views.Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/preferencr_switch"/>
-
     <TextView
         style="@style/TitleTextView"
         android:id="@+id/preferencr_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@id/preferencr_switch"
-        android:layout_toStartOf="@id/preferencr_switch"/>
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:id="@+id/preferencr_summary"
@@ -26,8 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/preferencr_title"
-        android:layout_toLeftOf="@id/preferencr_switch"
-        android:layout_toStartOf="@id/preferencr_switch"/>
+        android:layout_below="@id/preferencr_title"/>
 
 </RelativeLayout>
