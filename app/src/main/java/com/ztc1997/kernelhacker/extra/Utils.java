@@ -158,6 +158,7 @@ public class Utils {
                 .putString(PrefKeys.CPU_MAX_FREQ, readOneLine(Paths.CPUINFO_MAX_FREQ))
                 .putString(PrefKeys.CPU_MIN_FREQ, readOneLine(Paths.CPUINFO_MIN_FREQ))
                 .putBoolean(PrefKeys.ZRAM, readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
+				.putString(PrefKeys.ZRAM_DISKSIZE, readTextLines(Paths.ZRAM_DISKSIZE))
                 .apply();
     }
 }
