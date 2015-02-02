@@ -113,46 +113,50 @@ public class InfoFragment extends Fragment {
     private void deviceStateSetup(){
         cpuFreq.setMin(Integer.parseInt(preferences.getString(PrefKeys.CPU_MIN_FREQ, "0")) / 1000);
         cpuFreq.setMax(Integer.parseInt(preferences.getString(PrefKeys.CPU_MAX_FREQ, "0")) / 1000);
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                while (true){
-                    final int cpuTmp = Integer.parseInt(Utils.readOneLine(Paths.INFO_CPU_TEMP));
-                    String cpufrqStr = Utils.readOneLine(Paths.SCALING_CUR_FREQ);
-                    final int cpufrq = Integer.parseInt(cpufrqStr.substring(0, cpufrqStr.length() - 3));
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            int batteryTmp = batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,0) / 10;
-                            batteryTemp.setValue(batteryTmp);
-                            cpuTemp.setValue(cpuTmp);
-                            cpuFreq.setValue(cpufrq);
-                        }
-                    });
-                    try {
-                        sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         batteryIntent = getActivity().registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        if (updateStatsThread.isInterrupted())
+            updateStatsThread.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(batteryReceiver);
+        updateStatsThread.interrupt();
     }
+    
+    private Thread updateStatsThread = new Thread(){
+        @Override
+        public void run() {
+            super.run();
+            while (true){
+                final int cpuTmp = Integer.parseInt(Utils.readOneLine(Paths.INFO_CPU_TEMP));
+                String cpufrqStr = Utils.readOneLine(Paths.SCALING_CUR_FREQ);
+                final int cpufrq = Integer.parseInt(cpufrqStr.substring(0, cpufrqStr.length() - 3));
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int batteryTmp = batteryIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,0) / 10;
+                        batteryTemp.setValue(batteryTmp);
+                        cpuTemp.setValue(cpuTmp);
+                        cpuFreq.setValue(cpufrq);
+                    }
+                });
+                try {
+                    sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
-    BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             batteryTemp.setValue(intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, batteryTemp.getValue() * 10) / 10);
