@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,6 +38,13 @@ public class PreferenceSwitchView extends PreferenceView {
             switchView.setChecked(attr.getBoolean(R.styleable.PreferenceSwitchView_psv_defaultValue, false));
             attr.recycle();
         }
+        
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchView.setChecked(!switchView.isCheck());
+            }
+        });
         
         switchView.setOncheckListener(new Switch.OnCheckListener() {
             @Override

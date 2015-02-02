@@ -3,9 +3,11 @@ package com.ztc1997.kernelhacker.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +20,8 @@ public class PreferenceView extends RelativeLayout {
     protected String key;
     private TextView title, summary;
     protected SharedPreferences preferences;
+    private Point downPoint;
+    private OnClickListener onClickListener;
 
     public PreferenceView(Context context) {
         this(context, null);
@@ -76,5 +80,45 @@ public class PreferenceView extends RelativeLayout {
     public void setEnabled(boolean enabled) {
         title.setTextColor(getResources().getColor(enabled ? R.color.main_dark : R.color.main_light));
         super.setEnabled(enabled);
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        onClickListener = l;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (isEnabled())
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                    downPoint = new Point((int) event.getX(), (int) event.getY());
+                    title.setTextColor(getResources().getColor(R.color.main_light));
+                    summary.setTextColor(getResources().getColor(R.color.secondary_text_disabled_material_light));
+                    setBackgroundResource(R.color.dim_lighter_gray);
+                    break;
+                
+                case MotionEvent.ACTION_MOVE:
+                    if (Math.abs(event.getX() - downPoint.x) >= 5 && Math.abs(event.getY() - downPoint.y) >= 5) {
+                        getParent().requestDisallowInterceptTouchEvent(false);
+                        title.setTextColor(getResources().getColor(R.color.main_dark));
+                        summary.setTextColor(getResources().getColor(R.color.secondary_text_default_material_light));
+                        setBackgroundResource(R.color.transparent);
+                    }
+                    break;
+                
+                case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        title.setTextColor(getResources().getColor(R.color.main_dark));
+                        summary.setTextColor(getResources().getColor(R.color.secondary_text_default_material_light));
+                        setBackgroundResource(R.color.transparent);
+                        if (Math.abs(event.getX() - downPoint.x) <= 5 && Math.abs(event.getY() - downPoint.y) <= 5 && onClickListener != null) {
+                            onClickListener.onClick(this);
+                        }
+                        break;
+            }
+        super.onTouchEvent(event);
+        return true;
     }
 }
