@@ -60,4 +60,8 @@ public class PreferenceListView extends PreferenceView {
     public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
     }
+
+    public void setListClickListener(CustomListDialog.ListClickListener listClickListener) {
+        this.listClickListener = listClickListener;
+    }
 }
