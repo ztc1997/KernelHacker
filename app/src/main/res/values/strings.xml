@@ -34,5 +34,10 @@
     <string name="common_zram_title">ZRAM</string>
     <string name="common_zram_summary">Compressed RAM block device</string>
     <string name="common_zram_disable_hint">ZRAM may not be disabled right now, it will be disabled on next boot.</string>
+    <string name="common_cpu_title">CPU</string>
+    <string name="common_cpu_min_title">CPU min frequency</string>
+    <string name="common_cpu_min_summary">Current min frequency: %1$sMHz</string>
+    <string name="common_cpu_max_title">CPU max frequency</string>
+    <string name="common_cpu_max_summary">Current max frequency: %1$sMHz</string>
 
 </resources>

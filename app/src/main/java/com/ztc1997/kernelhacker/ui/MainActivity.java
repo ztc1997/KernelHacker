@@ -37,7 +37,7 @@ import cn.bmob.v3.update.BmobUpdateAgent;
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     
     private SharedPreferences preferences;
-    //private Fragment featuresFragment = new FeaturesFragment();
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -226,7 +226,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             public void run() {
                 super.run();
                 final boolean unableRoot = MyApplication.getRootUtil() == null;
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                handler.post(new Runnable() {
                     public void run() {
                         if (unableRoot) {
                             Dialog dialog1 = new Dialog(MainActivity.this, getString(R.string.dialog_getting_root_failed_title), getString(R.string.dialog_getting_root_failed_msg));
@@ -260,36 +260,49 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private final SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(final SharedPreferences preferences, final String s) {
+        public void onSharedPreferenceChanged(final SharedPreferences preferences, final String key) {
             new Thread(){
                 @Override
                 public void run() {
                     super.run();
                     synchronized (changeListener) {
-                        switch (s) {
+                        switch (key) {
                             case PrefKeys.T2W_AUTO:
                                 Intent intent = new Intent(MainActivity.this, AntiFalseWakeService.class);
-                                if (preferences.getBoolean(s, false))
+                                if (preferences.getBoolean(key, false))
                                     MainActivity.this.startService(intent);
                                 else
                                     MainActivity.this.stopService(intent);
                                 break;
                             case PrefKeys.T2W:
-                                String i = (preferences.getBoolean(s, false) ? "1" : "0");
+                                String i = (preferences.getBoolean(key, false) ? "1" : "0");
                                 Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
                                 Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
                                 break;
                             case PrefKeys.T2W_INTERAL:
-                                String delay = preferences.getString(s, "20");
+                                String delay = preferences.getString(key, "20");
                                 Utils.writeFileWithRoot(Paths.T2W_INTERVAL, delay);
                                 break;
                             case PrefKeys.ZRAM:
-                                if (preferences.getBoolean(s, false))
+                                if (preferences.getBoolean(key, false))
                                     MyApplication.getRootUtil().execute(Commands.ENABLE_ZRAM, null);
                                 else {
                                     MyApplication.getRootUtil().execute(Commands.DISABLE_ZRAM, null);
-                                    new SnackBar(MainActivity.this, getString(R.string.common_zram_disable_hint)).show();
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            new SnackBar(MainActivity.this, getString(R.string.common_zram_disable_hint)).show();
+                                        }
+                                    });
                                 }
+                                break;
+                            case PrefKeys.CPU_MIN_FREQ:
+                                Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "644");
+                                Utils.writeFileWithRoot(Paths.SCALING_MIN_FREQ, preferences.getString(key, "-1"));
+                                break;
+                            case PrefKeys.CPU_MAX_FREQ:
+                                Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "644");
+                                Utils.writeFileWithRoot(Paths.SCALING_MAX_FREQ, preferences.getString(key, "-1"));
                                 break;
                         }
                     }

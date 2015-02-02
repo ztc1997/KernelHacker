@@ -82,6 +82,10 @@ public class BootReceiver extends BroadcastReceiver {
                 Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getString(PrefKeys.T2W_RANGE_Y_FROM, "0"));
                 Utils.writeFileWithRoot(Paths.T2W_X_TO, preferences.getString(PrefKeys.T2W_RANGE_X_TO, "719"));
                 Utils.writeFileWithRoot(Paths.T2W_Y_TO, preferences.getString(PrefKeys.T2W_RANGE_Y_TO, "1327"));
+                Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "644");
+                Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "644");
+                Utils.writeFileWithRoot(Paths.SCALING_MIN_FREQ, preferences.getString(PrefKeys.CPU_MIN_FREQ, "-1"));
+                Utils.writeFileWithRoot(Paths.SCALING_MAX_FREQ, preferences.getString(PrefKeys.CPU_MAX_FREQ, "-1"));
                 MyApplication.getRootUtil().execute(preferences.getBoolean(PrefKeys.ZRAM, false) ?
                         Commands.ENABLE_ZRAM : Commands.DISABLE_ZRAM, null);
             }

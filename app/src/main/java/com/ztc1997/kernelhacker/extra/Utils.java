@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,10 @@ public class Utils {
     
     public static boolean writeFileWithRoot(String path, String value){
         return MyApplication.getRootUtil().execute("echo " + value + " > " + path, null) == 0;
+    }
+    
+    public static void setFilePermission(String path, String permission){
+        MyApplication.getRootUtil().execute("chmod " + permission + " " + path, null);
     }
     
     public static String readOneLine(String strFilePath)
@@ -160,5 +166,53 @@ public class Utils {
                 .putBoolean(PrefKeys.ZRAM, readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
 				.putString(PrefKeys.ZRAM_DISKSIZE, readTextLines(Paths.ZRAM_DISKSIZE))
                 .apply();
+    }
+
+    private static String[] readStringArray(String filename) {
+        String line = readOneLine(filename);
+        if (line != null) {
+            return line.split(" ");
+        }
+        return null;
+    }
+
+    public static String[] getAvailableFrequencies() {
+        String[] frequencies = readStringArray(Paths.SCALING_AVAILABLE_FREQ);
+        if (frequencies == null) {
+            Stats stats = getFrequencyStats(false);
+            if (stats != null) {
+                frequencies = new String[stats.getFrequencies().size()];
+                for (int i = 0; i < stats.getFrequencies().size(); i++) {
+                    frequencies[i] = stats.getFrequencies().get(i).getValue();
+                }
+            } else {
+                frequencies = new String[2];
+                frequencies[0] = readOneLine(Paths.CPUINFO_MIN_FREQ);
+                frequencies[1] = readOneLine(Paths.CPUINFO_MAX_FREQ);
+                if (frequencies[0].equals("-1") || frequencies[1].equals("-1")) {
+                    frequencies = null;
+                }
+            }
+        }
+        if (frequencies != null) {
+			/*
+			 * Sort them if they aren't already sorted. It happens on devices from
+			 * Samsung. Thanks to JoPhj for the discovery.
+			 */
+            Comparator<String> frequencyComparator = new Comparator<String>() {
+                @Override
+                public int compare(String lhs, String rhs) {
+                    Integer lhi = Integer.parseInt(lhs);
+                    Integer rhi = Integer.parseInt(rhs);
+                    return lhi.compareTo(rhi);
+                }
+            };
+            Arrays.sort(frequencies, frequencyComparator);
+        }
+        return frequencies;
+    }
+    
+    public static String khzToMhzString(String khz){
+        return khz.substring(0, khz.length() - 3);
     }
 }
