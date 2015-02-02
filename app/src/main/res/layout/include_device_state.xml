@@ -11,7 +11,7 @@
             style="@style/CardTitleTextView"
             android:text="@string/info_device_state"/>
 
-        <com.ztc1997.kernelhacker.widget.InfoProgressBar
+        <com.ztc1997.kernelhacker.viwe.InfoProgressBar
             android:id="@+id/info_cpu_freq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             app:unit="MHz"
             app:name="@string/info_device_state_cpu_freq"/>
         
-        <com.ztc1997.kernelhacker.widget.InfoProgressBar
+        <com.ztc1997.kernelhacker.viwe.InfoProgressBar
             android:id="@+id/info_cpu_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             app:unit="℃"
             app:name="@string/info_device_state_cpu_temp"/>
 
-        <com.ztc1997.kernelhacker.widget.InfoProgressBar
+        <com.ztc1997.kernelhacker.viwe.InfoProgressBar
             android:id="@+id/info_battery_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

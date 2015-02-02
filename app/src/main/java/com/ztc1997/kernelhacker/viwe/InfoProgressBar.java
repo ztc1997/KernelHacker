@@ -1,15 +1,10 @@
-package com.ztc1997.kernelhacker.widget;
+package com.ztc1997.kernelhacker.viwe;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ProgressBarDeterminate;
