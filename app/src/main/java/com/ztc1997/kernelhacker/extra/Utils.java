@@ -32,6 +32,9 @@ public class Utils {
         String content = ""; //文件内容字符串
         //打开文件
         File file = new File(path);
+        if (!file.exists()) {
+            return "-1";
+        }
         //如果path是传递过来的参数，可以做一个非目录的判断
         if (file.isDirectory())
         {
@@ -41,14 +44,11 @@ public class Utils {
         {
             try {
                 InputStream instream = new FileInputStream(file);
-                if (instream != null)
-                {
-                    InputStreamReader inputreader = new InputStreamReader(instream);
-                    BufferedReader buffreader = new BufferedReader(inputreader);
-                    //分行读取
-                    content = buffreader.readLine();
-                    instream.close();
-                }
+                InputStreamReader inputreader = new InputStreamReader(instream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                //分行读取
+                content = buffreader.readLine();
+                instream.close();
             }
             catch (java.io.FileNotFoundException e)
             {
