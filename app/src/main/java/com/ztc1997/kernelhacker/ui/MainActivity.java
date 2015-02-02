@@ -258,30 +258,43 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
     }
 
-    private SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+    private final SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String s) {
-            if (s.equals(PrefKeys.T2W_AUTO)){
-                Intent intent = new Intent(MainActivity.this, AntiFalseWakeService.class);
-                if (preferences.getBoolean(s, false))
-                    MainActivity.this.startService(intent);
-                else
-                    MainActivity.this.stopService(intent);
-            }else if (s.equals(PrefKeys.T2W)){
-                String i = (preferences.getBoolean(s, false) ? "1" : "0");
-                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
-                Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
-            }else if (s.equals(PrefKeys.T2W_INTERAL)){
-                String delay = preferences.getString(s, "20");
-                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, delay);
-            }else if (s.equals(PrefKeys.ZRAM)){
-                if (preferences.getBoolean(s, false))
-                    MyApplication.getRootUtil().execute(Commands.ENABLE_ZRAM, null);
-                else {
-                    MyApplication.getRootUtil().execute(Commands.DISABLE_ZRAM, null);
-                    new SnackBar(MainActivity.this, getString(R.string.common_zram_disable_hint)).show();
+        public void onSharedPreferenceChanged(final SharedPreferences preferences, final String s) {
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    synchronized (changeListener) {
+                        switch (s) {
+                            case PrefKeys.T2W_AUTO:
+                                Intent intent = new Intent(MainActivity.this, AntiFalseWakeService.class);
+                                if (preferences.getBoolean(s, false))
+                                    MainActivity.this.startService(intent);
+                                else
+                                    MainActivity.this.stopService(intent);
+                                break;
+                            case PrefKeys.T2W:
+                                String i = (preferences.getBoolean(s, false) ? "1" : "0");
+                                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
+                                Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
+                                break;
+                            case PrefKeys.T2W_INTERAL:
+                                String delay = preferences.getString(s, "20");
+                                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, delay);
+                                break;
+                            case PrefKeys.ZRAM:
+                                if (preferences.getBoolean(s, false))
+                                    MyApplication.getRootUtil().execute(Commands.ENABLE_ZRAM, null);
+                                else {
+                                    MyApplication.getRootUtil().execute(Commands.DISABLE_ZRAM, null);
+                                    new SnackBar(MainActivity.this, getString(R.string.common_zram_disable_hint)).show();
+                                }
+                                break;
+                        }
+                    }
                 }
-            }
+            }.start();
         }
     };
 }
