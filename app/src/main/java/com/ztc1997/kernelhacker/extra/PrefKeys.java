@@ -21,4 +21,5 @@ public interface PrefKeys {
     String CPU_MIN_FREQ = "pref_cpu_min_freq";
     
     String ZRAM = "pref_zram";
+	String ZRAM_DISKSIZE = "pref_zram_disksize";
 }
