@@ -27,5 +27,8 @@
     <string name="info_device_state_cpu_freq">Cpu Frequency: </string>
     <string name="info_device_state_cpu_temp">Cpu Temp: </string>
     <string name="info_device_state_batery_temp">Batery Temp: </string>
+    <string name="common_zram_title">ZRAM</string>
+    <string name="common_zram_summary">Compressed RAM block device</string>
+    <string name="common_zram_disable_hint">ZRAM may not be disabled right now, it will be disabled on next boot.</string>
 
 </resources>

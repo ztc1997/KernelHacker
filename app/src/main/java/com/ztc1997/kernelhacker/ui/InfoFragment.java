@@ -28,7 +28,7 @@ import com.ztc1997.kernelhacker.extra.Paths;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Stats;
 import com.ztc1997.kernelhacker.extra.Utils;
-import com.ztc1997.kernelhacker.viwe.InfoProgressBar;
+import com.ztc1997.kernelhacker.view.InfoProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;

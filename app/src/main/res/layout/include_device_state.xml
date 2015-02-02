@@ -11,29 +11,29 @@
             style="@style/CardTitleTextView"
             android:text="@string/info_device_state"/>
 
-        <com.ztc1997.kernelhacker.viwe.InfoProgressBar
+        <com.ztc1997.kernelhacker.view.InfoProgressBar
             android:id="@+id/info_cpu_freq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            app:unit="MHz"
-            app:name="@string/info_device_state_cpu_freq"/>
+            app:ipb_unit="MHz"
+            app:ipb_name="@string/info_device_state_cpu_freq"/>
         
-        <com.ztc1997.kernelhacker.viwe.InfoProgressBar
+        <com.ztc1997.kernelhacker.view.InfoProgressBar
             android:id="@+id/info_cpu_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            app:unit="℃"
-            app:name="@string/info_device_state_cpu_temp"/>
+            app:ipb_unit="℃"
+            app:ipb_name="@string/info_device_state_cpu_temp"/>
 
-        <com.ztc1997.kernelhacker.viwe.InfoProgressBar
+        <com.ztc1997.kernelhacker.view.InfoProgressBar
             android:id="@+id/info_battery_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            app:unit="℃"
-            app:name="@string/info_device_state_batery_temp"/>
+            app:ipb_unit="℃"
+            app:ipb_name="@string/info_device_state_batery_temp"/>
         
     </LinearLayout>
 

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="InfoProgressBar">
-        <attr name="maxValue" format="integer"/>
-        <attr name="minValue" format="integer"/>
-        <attr name="unit" format="string"/>
-        <attr name="name" format="string"/>
-        <attr name="defaultValue" format="integer"/>
-        <attr name="barColor" format="color"/>
+        <attr name="ipb_maxValue" format="integer"/>
+        <attr name="ipb_minValue" format="integer"/>
+        <attr name="ipb_unit" format="string"/>
+        <attr name="ipb_name" format="string"/>
+        <attr name="ipb_defaultValue" format="integer"/>
+        <attr name="ipb_barColor" format="color"/>
+    </declare-styleable>
+    
+    <declare-styleable name="PreferenceSwitchView">
+        <attr name="psv_key" format="string"/>
+        <attr name="psv_title" format="string"/>
+        <attr name="psv_summary" format="string"/>
+        <attr name="psv_defaultValue" format="boolean"/>
     </declare-styleable>
 </resources>

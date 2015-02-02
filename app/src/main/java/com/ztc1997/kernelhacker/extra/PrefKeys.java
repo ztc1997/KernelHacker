@@ -17,4 +17,6 @@ public interface PrefKeys {
     
     String CPU_MAX_FREQ = "pref_cpu_max_freq";
     String CPU_MIN_FREQ = "pref_cpu_min_freq";
+    
+    String ZRAM = "pref_zram";
 }

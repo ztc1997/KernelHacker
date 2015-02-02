@@ -1,4 +1,4 @@
-package com.ztc1997.kernelhacker.viwe;
+package com.ztc1997.kernelhacker.view;
 
 import android.view.*;
 import android.content.*;

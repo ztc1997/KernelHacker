@@ -2,10 +2,8 @@ package com.ztc1997.kernelhacker.ui;
 
 import java.util.Locale;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -23,8 +21,10 @@ import android.view.ViewGroup;
 
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.ProgressDialog;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.ztc1997.kernelhacker.AntiFalseWakeService;
 import com.ztc1997.kernelhacker.MyApplication;
+import com.ztc1997.kernelhacker.extra.Commands;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Paths;
 import com.ztc1997.kernelhacker.R;
@@ -152,6 +152,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch (position){
                 case 0:
                     return new InfoFragment();
+                case 1:
+                    return new CommonFragment();
                 case 2:
                     return new FeaturesFragment();
                 default:
@@ -261,6 +263,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 .putBoolean(PrefKeys.T2W, !Utils.readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
                 .putString(PrefKeys.CPU_MAX_FREQ, Utils.readOneLine(Paths.CPUINFO_MAX_FREQ))
                 .putString(PrefKeys.CPU_MIN_FREQ, Utils.readOneLine(Paths.CPUINFO_MIN_FREQ))
+                .putBoolean(PrefKeys.ZRAM, Utils.readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
                 .apply();
     }
 
@@ -286,6 +289,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }else if (s.equals(PrefKeys.T2W_INTERAL)){
                 String delay = preferences.getString(s, "20");
                 Utils.writeFileWithRoot(Paths.T2W_INTERVAL, delay);
+            }else if (s.equals(PrefKeys.ZRAM)){
+                if (preferences.getBoolean(s, false))
+                    MyApplication.getRootUtil().execute(Commands.ENABLE_ZRAM, null);
+                else {
+                    MyApplication.getRootUtil().execute(Commands.DISABLE_ZRAM, null);
+                    new SnackBar(MainActivity.this, getString(R.string.common_zram_disable_hint)).show();
+                }
             }
         }
     };

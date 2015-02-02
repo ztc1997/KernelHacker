@@ -27,4 +27,11 @@ public interface Paths {
     String SCALING_AVAILABLE_FREQ = CPUFREQ_SYS_DIR + "scaling_available_frequencies";
     String SCALING_AVAILABLE_GOVERNORS = CPUFREQ_SYS_DIR + "scaling_available_governors";
     String SCALING_STATS_TIME_IN_STATE = CPUFREQ_SYS_DIR + "stats/time_in_state";
+
+    String ZRAM_SYS_DIR = "/sys/block/zram0/";
+    String ZRAM_DISKSIZE = ZRAM_SYS_DIR + "disksize";
+    String ZRAM_COMPRESSED_DATA_SIZE = ZRAM_SYS_DIR + "compr_data_size";
+    String ZRAM_ORIGINAL_DATA_SIZE = ZRAM_SYS_DIR + "orig_data_size";
+    String ZRAM_MEM_USED_TOTAL = ZRAM_SYS_DIR + "mem_used_total";
+    String SWAP_STATE = "/proc/swaps";
 }

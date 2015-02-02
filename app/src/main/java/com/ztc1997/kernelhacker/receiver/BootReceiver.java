@@ -12,6 +12,8 @@ import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 
 import com.ztc1997.kernelhacker.AntiFalseWakeService;
+import com.ztc1997.kernelhacker.MyApplication;
+import com.ztc1997.kernelhacker.extra.Commands;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Paths;
 import com.ztc1997.kernelhacker.R;
@@ -35,29 +37,34 @@ public class BootReceiver extends BroadcastReceiver {
                 public void run() {
                     super.run();
                     String i = (preferences.getBoolean(PrefKeys.T2W, false) ? 1 : 0) + "";
-                    if (!(Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i)
-                            |Utils.writeFileWithRoot(Paths.T2W_ENABLE, i)
-                            |Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getString(PrefKeys.T2W_INTERAL, "20"))
-                            |Utils.writeFileWithRoot(Paths.T2W_X_FROM, preferences.getString(PrefKeys.T2W_RANGE_X_FROM, "0"))
-                            |Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getString(PrefKeys.T2W_RANGE_Y_FROM, "0"))
-                            |Utils.writeFileWithRoot(Paths.T2W_X_TO, preferences.getString(PrefKeys.T2W_RANGE_X_TO, "719"))
-                            |Utils.writeFileWithRoot(Paths.T2W_Y_TO, preferences.getString(PrefKeys.T2W_RANGE_Y_TO, "1327"))))
-                        showNotifition();
+                    if (MyApplication.getRootUtil() == null) {
+                        showNotifition(R.string.notifition_boot_setting_failed_title, R.string.notifition_boot_setting_failed_text);
+                        return;
+                    }
+                    Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
+                    Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
+                    Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getString(PrefKeys.T2W_INTERAL, "20"));
+                    Utils.writeFileWithRoot(Paths.T2W_X_FROM, preferences.getString(PrefKeys.T2W_RANGE_X_FROM, "0"));
+                    Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getString(PrefKeys.T2W_RANGE_Y_FROM, "0"));
+                    Utils.writeFileWithRoot(Paths.T2W_X_TO, preferences.getString(PrefKeys.T2W_RANGE_X_TO, "719"));
+                    Utils.writeFileWithRoot(Paths.T2W_Y_TO, preferences.getString(PrefKeys.T2W_RANGE_Y_TO, "1327"));
+                    MyApplication.getRootUtil().execute(preferences.getBoolean(PrefKeys.ZRAM, false) ?
+                            Commands.ENABLE_ZRAM : Commands.DISABLE_ZRAM, null);
                 }
             }.start();
         }
     }
     
-    private void showNotifition(){
+    private void showNotifition(int titleRes, int contentRes){
         Resources res = context.getResources();
         PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
         Notification.Builder builder = new Notification.Builder(context)
-                .setContentTitle(res.getString(R.string.notifition_boot_setting_failed_title))
+                .setContentTitle(res.getString(titleRes))
                 .setContentText(res.getString(R.string.app_name))
                 .setContentIntent(pi)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(false)
-                .setTicker(res.getString(R.string.notifition_boot_setting_failed_title))
+                .setTicker(res.getString(titleRes))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher));
 

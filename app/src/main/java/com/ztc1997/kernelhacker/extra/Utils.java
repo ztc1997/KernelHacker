@@ -46,8 +46,46 @@ public class Utils {
                 InputStream instream = new FileInputStream(file);
                 InputStreamReader inputreader = new InputStreamReader(instream);
                 BufferedReader buffreader = new BufferedReader(inputreader);
-                //分行读取
                 content = buffreader.readLine();
+                instream.close();
+            }
+            catch (java.io.FileNotFoundException e)
+            {
+                Log.d("TestFile", "The File doesn't not exist.");
+            }
+            catch (IOException e)
+            {
+                Log.d("TestFile", e.getMessage());
+            }
+        }
+        return content;
+    }
+
+    public static String readTextLines(String strFilePath)
+    {
+        String path = strFilePath;
+        String content = ""; //文件内容字符串
+        //打开文件
+        File file = new File(path);
+        if (!file.exists()) {
+            return "-1";
+        }
+        //如果path是传递过来的参数，可以做一个非目录的判断
+        if (file.isDirectory())
+        {
+            Log.d("TestFile", "The File doesn't not exist.");
+        }
+        else
+        {
+            try {
+                InputStream instream = new FileInputStream(file);
+                InputStreamReader inputreader = new InputStreamReader(instream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                //分行读取
+                String line;
+                while (( line = buffreader.readLine()) != null) {
+                    content += line + "\n";
+                }
                 instream.close();
             }
             catch (java.io.FileNotFoundException e)

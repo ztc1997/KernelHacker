@@ -1,4 +1,4 @@
-package com.ztc1997.kernelhacker.viwe;
+package com.ztc1997.kernelhacker.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -45,12 +45,12 @@ public class InfoProgressBar extends LinearLayout {
         color = getResources().getColor(R.color.main_dark);
         if (attributeSet != null) {
             TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.InfoProgressBar);
-            unit = attr.getString(R.styleable.InfoProgressBar_unit);
-            name = attr.getString(R.styleable.InfoProgressBar_name);
-            min = attr.getInt(R.styleable.InfoProgressBar_minValue, 0);
-            max = attr.getInt(R.styleable.InfoProgressBar_maxValue, 100);
-            value =attr.getInt(R.styleable.InfoProgressBar_defaultValue, 0);
-            color = attr.getColor(R.styleable.InfoProgressBar_barColor, getResources().getColor(R.color.main_dark));
+            unit = attr.getString(R.styleable.InfoProgressBar_ipb_unit);
+            name = attr.getString(R.styleable.InfoProgressBar_ipb_name);
+            min = attr.getInt(R.styleable.InfoProgressBar_ipb_minValue, 0);
+            max = attr.getInt(R.styleable.InfoProgressBar_ipb_maxValue, 100);
+            value =attr.getInt(R.styleable.InfoProgressBar_ipb_defaultValue, 0);
+            color = attr.getColor(R.styleable.InfoProgressBar_ipb_barColor, getResources().getColor(R.color.main_dark));
         }
         setColor(color);
         updateText();
@@ -62,11 +62,6 @@ public class InfoProgressBar extends LinearLayout {
 
     public void setColor(int color) {
         this.color = color;
-/*        Drawable[] drawables = {new ColorDrawable(color), new ColorDrawable(getResources().getColor(R.color.main_light)), new ColorDrawable(Color.TRANSPARENT)};
-        LayerDrawable layerDrawable = new LayerDrawable(drawables);
-        layerDrawable.setId(0, android.R.id.progress);
-        layerDrawable.setId(1, android.R.id.secondaryProgress);
-        layerDrawable.setId(2, android.R.id.background);*/
         progressBar.setBackgroundColor(color);
     }
 

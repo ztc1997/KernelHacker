@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    <com.ztc1997.kernelhacker.view.PreferenceSwitchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/zram_switch"
+        app:psv_title="@string/common_zram_title"
+        app:psv_summary="@string/common_zram_summary"
+        app:psv_key="pref_zram"/>
+
+</android.support.v7.widget.CardView>

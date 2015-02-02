@@ -12,7 +12,7 @@ import com.ztc1997.kernelhacker.R;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Paths;
 import com.ztc1997.kernelhacker.extra.Utils;
-import com.ztc1997.kernelhacker.viwe.DrawRectView;
+import com.ztc1997.kernelhacker.view.DrawRectView;
 
 /**
  * Created by Alex on 2015/1/31.
