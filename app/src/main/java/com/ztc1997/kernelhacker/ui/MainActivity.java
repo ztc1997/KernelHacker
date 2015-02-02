@@ -249,22 +249,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onResume() {
         super.onResume();
         preferences.registerOnSharedPreferenceChangeListener(changeListener);
-        initSysValues();
-    }
-
-    private void initSysValues(){
-        preferences.edit()
-                .putString(PrefKeys.KERNEL_VERSION, Utils.readOneLine(Paths.INFO_KERNEL_VERSION))
-                .putString(PrefKeys.T2W_INTERAL, Utils.readOneLine(Paths.T2W_INTERVAL))
-                .putString(PrefKeys.T2W_RANGE_X_FROM, Utils.readOneLine(Paths.T2W_X_FROM))
-                .putString(PrefKeys.T2W_RANGE_X_TO, Utils.readOneLine(Paths.T2W_X_TO))
-                .putString(PrefKeys.T2W_RANGE_Y_FROM, Utils.readOneLine(Paths.T2W_Y_FROM))
-                .putString(PrefKeys.T2W_RANGE_Y_TO,Utils.readOneLine(Paths.T2W_Y_TO))
-                .putBoolean(PrefKeys.T2W, !Utils.readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
-                .putString(PrefKeys.CPU_MAX_FREQ, Utils.readOneLine(Paths.CPUINFO_MAX_FREQ))
-                .putString(PrefKeys.CPU_MIN_FREQ, Utils.readOneLine(Paths.CPUINFO_MIN_FREQ))
-                .putBoolean(PrefKeys.ZRAM, Utils.readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
-                .apply();
+        Utils.initSysValues(preferences);
     }
 
     @Override

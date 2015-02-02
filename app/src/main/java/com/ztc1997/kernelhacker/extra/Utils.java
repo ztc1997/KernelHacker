@@ -1,5 +1,6 @@
 package com.ztc1997.kernelhacker.extra;
 
+import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.provider.SyncStateContract;
 import android.util.Log;
@@ -143,5 +144,20 @@ public class Utils {
             return null;
         }
 
+    }
+
+    public static void initSysValues(SharedPreferences preferences){
+        preferences.edit()
+                .putString(PrefKeys.KERNEL_VERSION, readOneLine(Paths.INFO_KERNEL_VERSION))
+                .putString(PrefKeys.T2W_INTERAL, readOneLine(Paths.T2W_INTERVAL))
+                .putString(PrefKeys.T2W_RANGE_X_FROM, readOneLine(Paths.T2W_X_FROM))
+                .putString(PrefKeys.T2W_RANGE_X_TO, readOneLine(Paths.T2W_X_TO))
+                .putString(PrefKeys.T2W_RANGE_Y_FROM, readOneLine(Paths.T2W_Y_FROM))
+                .putString(PrefKeys.T2W_RANGE_Y_TO,readOneLine(Paths.T2W_Y_TO))
+                .putBoolean(PrefKeys.T2W, readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
+                .putString(PrefKeys.CPU_MAX_FREQ, readOneLine(Paths.CPUINFO_MAX_FREQ))
+                .putString(PrefKeys.CPU_MIN_FREQ, readOneLine(Paths.CPUINFO_MIN_FREQ))
+                .putBoolean(PrefKeys.ZRAM, readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
+                .apply();
     }
 }

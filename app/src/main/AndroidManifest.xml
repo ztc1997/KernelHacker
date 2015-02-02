@@ -32,6 +32,12 @@
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
             android:theme="@style/UpdateDialogTheme" >
         </activity>
+        <activity
+            android:name=".ui.ReBootSetActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="false"
+            android:noHistory="false" >
+        </activity>
 
         <service
             android:name=".AntiFalseWakeService"
@@ -45,6 +51,15 @@
             android:name=".receiver.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:enabled="true"
+            android:exported="true"
+            android:name=".receiver.ShutdownReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>

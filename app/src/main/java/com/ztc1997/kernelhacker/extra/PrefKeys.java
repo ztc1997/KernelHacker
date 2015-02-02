@@ -4,6 +4,8 @@ package com.ztc1997.kernelhacker.extra;
  * Created by Alex on 2015/1/31.
  */
 public interface PrefKeys {
+    String BOOTED = "pref_booted";
+    
     String KERNEL_VERSION = "pref_kernel_version";
     
     public String T2W = "pref_t2w";

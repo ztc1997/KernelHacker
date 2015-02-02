@@ -18,8 +18,12 @@
     <string name="dialog_getting_root_title">Getting ROOT permission</string>
     <string name="dialog_getting_root_failed_title">Applications can not be used</string>
     <string name="dialog_getting_root_failed_msg">Unable to get ROOT permission</string>
+    <string name="notifition_boot_no_shutdown_title">Abnormal shutdown, have not set on boot</string>
+    <string name="notifition_boot_kernel_changed_title">Kernel version changed, have not set on boot</string>
     <string name="notifition_boot_setting_failed_title">Failed when setting on boot</string>
     <string name="notifition_boot_setting_failed_text">Click to open the application</string>
+    <string name="re_boot_set_title">Use original settings?</string>
+    <string name="re_boot_set_content">May lead to instability.</string>
     <string name="info_cpu_time_in_state">CPU Time In State</string>
     <string name="info_kernel_version">Kernel Version</string>
     <string name="info_kernel_version_unable">Unable To Get Kernel Version</string>
