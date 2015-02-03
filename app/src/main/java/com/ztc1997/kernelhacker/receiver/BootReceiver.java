@@ -90,6 +90,7 @@ public class BootReceiver extends BroadcastReceiver {
                     Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "444");
                     Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "444");
                 }
+                Utils.writeFileWithRoot(Paths.SCALING_GOVERNOR, preferences.getString(PrefKeys.CPU_GOV, "-1"));
                 MyApplication.getRootUtil().execute(preferences.getBoolean(PrefKeys.ZRAM, false) ?
                         Commands.ENABLE_ZRAM : Commands.DISABLE_ZRAM, null);
             }
