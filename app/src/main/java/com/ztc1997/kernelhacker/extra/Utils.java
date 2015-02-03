@@ -29,6 +29,26 @@ public class Utils {
         return MyApplication.getRootUtil().execute("echo " + value + " > " + path, null) == 0;
     }
     
+    public static String getFilePermission(String path){
+        ArrayList<String> list = new ArrayList<String>();
+        MyApplication.getRootUtil().execute("ls -ld " + path + " |awk '{print $1}'|sed 's/^[a-zA-Z-]//'", list);
+        String s1 = permissionStringToInt(list.get(0).substring(0, 2)) + "";
+        String s2 = permissionStringToInt(list.get(0).substring(3, 5)) + "";
+        String s3 = permissionStringToInt(list.get(0).substring(6, 8)) + "";
+        return s1 + s2 + s3;
+    }
+    
+    private static int permissionStringToInt(String permission){
+        int rc = 0;
+        if (permission.contains("x"))
+            rc += 1;
+        if (permission.contains("w"))
+            rc += 2;
+        if (permission.contains("r"))
+            rc += 4;
+        return rc;
+    }
+    
     public static void setFilePermission(String path, String permission){
         MyApplication.getRootUtil().execute("chmod " + permission + " " + path, null);
     }
@@ -165,6 +185,7 @@ public class Utils {
                 .putString(PrefKeys.CPU_MIN_FREQ, readOneLine(Paths.CPUINFO_MIN_FREQ))
                 .putBoolean(PrefKeys.ZRAM, readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
 				.putString(PrefKeys.ZRAM_DISKSIZE, readTextLines(Paths.ZRAM_DISKSIZE))
+                .putBoolean(PrefKeys.CPU_LOCK_FREQ, getFilePermission(Paths.SCALING_MAX_FREQ).equals("444"))
                 .apply();
     }
 

@@ -22,7 +22,7 @@ import uk.me.lewisdeane.ldialogs.CustomListDialog;
  */
 public class CommonFragment extends Fragment {
 
-    private PreferenceSwitchView zramView;
+    private PreferenceSwitchView zramView, cpuLockView;
     private PreferenceListView cpuMinView,cpuMaxView;
     private SharedPreferences preferences;
 
@@ -45,13 +45,14 @@ public class CommonFragment extends Fragment {
         zramView = (PreferenceSwitchView) rootView.findViewById(R.id.zram_switch);
         cpuMinView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_min);
         cpuMaxView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_max);
+        cpuLockView = (PreferenceSwitchView) rootView.findViewById(R.id.common_cpu_lock);
         zramSetup();
         cpuSetup();
         return rootView;
     }
 
     private void zramSetup(){
-        zramView.setChecked(preferences.getBoolean(PrefKeys.ZRAM, false));
+        
     }
 
     private void cpuSetup(){
@@ -65,10 +66,13 @@ public class CommonFragment extends Fragment {
         super.onResume();
         preferences.registerOnSharedPreferenceChangeListener(changeListener);
 
+        cpuLockView.setChecked(preferences.getBoolean(PrefKeys.CPU_LOCK_FREQ, false));
         String minFreq = Utils.khzToMhzString(preferences.getString(PrefKeys.CPU_MIN_FREQ, "-1"));
         cpuMinView.setSummary(getString(R.string.common_cpu_min_summary, minFreq));
         String maxFreq = Utils.khzToMhzString(preferences.getString(PrefKeys.CPU_MAX_FREQ, "-1"));
         cpuMaxView.setSummary(getString(R.string.common_cpu_min_summary, maxFreq));
+        
+        zramView.setChecked(preferences.getBoolean(PrefKeys.ZRAM, false));
     }
 
     @Override

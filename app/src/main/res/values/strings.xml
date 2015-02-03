@@ -39,5 +39,7 @@
     <string name="common_cpu_min_summary">Current min frequency: %1$sMHz</string>
     <string name="common_cpu_max_title">CPU max frequency</string>
     <string name="common_cpu_max_summary">Current max frequency: %1$sMHz</string>
+    <string name="common_cpu_lock_title">Lock frequency</string>
+    <string name="common_cpu_lock_summary">Prevent frequency from being changed by other apps.</string>
 
 </resources>
