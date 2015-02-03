@@ -49,7 +49,8 @@ public class PreferenceSwitchView extends PreferenceView {
         switchView.setOncheckListener(new Switch.OnCheckListener() {
             @Override
             public void onCheck(boolean check) {
-                preferences.edit().putBoolean(key, check).apply();
+                if (key != null)
+                    preferences.edit().putBoolean(key, check).apply();
             }
         });
     }

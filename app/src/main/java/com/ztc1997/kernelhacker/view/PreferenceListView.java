@@ -47,7 +47,8 @@ public class PreferenceListView extends PreferenceView {
         dialog.setListClickListener(new CustomListDialog.ListClickListener(){
             @Override
             public void onListItemSelected(int position, String[] items, String item) {
-                preferences.edit().putString(key, item).apply();
+                if (key != null)
+                    preferences.edit().putString(key, item).apply();
                 if (listClickListener != null)
                     listClickListener.onListItemSelected(position, items, item);
             }
