@@ -218,7 +218,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     private void getRoot(){
-        final ProgressDialog dialog = new ProgressDialog(this,getString(R.string.dialog_getting_root_title));
+        final ProgressDialog dialog = new ProgressDialog(this,getString(R.string.dialog_initialization_title));
         dialog.setCancelable(false);
         dialog.show();
         new Thread(){
@@ -238,6 +238,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             });
                             dialog1.show();
                         }
+                        Utils.initSysValues(preferences);
                         dialog.dismiss();
                     }
                 });
@@ -249,7 +250,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onResume() {
         super.onResume();
         preferences.registerOnSharedPreferenceChangeListener(changeListener);
-        Utils.initSysValues(preferences);
     }
 
     @Override
@@ -303,6 +303,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             case PrefKeys.CPU_MAX_FREQ:
                                 Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "644");
                                 Utils.writeFileWithRoot(Paths.SCALING_MAX_FREQ, preferences.getString(key, "-1"));
+                                break;
+                            case PrefKeys.CPU_LOCK_FREQ:
+                                boolean lookFreq = preferences.getBoolean(key, false);
+                                Utils.setFilePermission(Paths.SCALING_MAX_FREQ, lookFreq ? "444" : "644");
+                                Utils.setFilePermission(Paths.SCALING_MIN_FREQ, lookFreq ? "444" : "644");
                                 break;
                         }
                     }
