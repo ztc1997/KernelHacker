@@ -35,11 +35,13 @@
     <string name="common_zram_summary">Compressed RAM block device</string>
     <string name="common_zram_disable_hint">ZRAM may not be disabled right now, it will be disabled on next boot.</string>
     <string name="common_cpu_title">CPU</string>
-    <string name="common_cpu_min_title">CPU min frequency</string>
-    <string name="common_cpu_min_summary">Current min frequency: %1$sMHz</string>
-    <string name="common_cpu_max_title">CPU max frequency</string>
-    <string name="common_cpu_max_summary">Current max frequency: %1$sMHz</string>
-    <string name="common_cpu_lock_title">Lock frequency</string>
+    <string name="common_cpu_min_title">CPU Min Frequency</string>
+    <string name="common_cpu_min_summary">Current Min Frequency: %1$sMHz</string>
+    <string name="common_cpu_max_title">CPU Max Frequency</string>
+    <string name="common_cpu_max_summary">Current Max Frequency: %1$sMHz</string>
+    <string name="common_cpu_gov_title">CPU Governor</string>
+    <string name="common_cpu_gov_summary">Current Governor: %1$s</string>
+    <string name="common_cpu_lock_title">Lock Frequency</string>
     <string name="common_cpu_lock_summary">Prevent frequency from being changed by other apps.</string>
 
 </resources>

@@ -186,10 +186,11 @@ public class Utils {
                 .putBoolean(PrefKeys.ZRAM, readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
 				.putString(PrefKeys.ZRAM_DISKSIZE, readTextLines(Paths.ZRAM_DISKSIZE))
                 .putBoolean(PrefKeys.CPU_LOCK_FREQ, getFilePermission(Paths.SCALING_MAX_FREQ).equals("444"))
+                .putString(PrefKeys.CPU_GOV, readOneLine(Paths.SCALING_GOVERNOR))
                 .apply();
     }
 
-    private static String[] readStringArray(String filename) {
+    public static String[] readStringArray(String filename) {
         String line = readOneLine(filename);
         if (line != null) {
             return line.split(" ");

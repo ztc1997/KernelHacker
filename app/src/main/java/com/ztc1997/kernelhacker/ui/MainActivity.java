@@ -309,6 +309,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 Utils.setFilePermission(Paths.SCALING_MAX_FREQ, lookFreq ? "444" : "644");
                                 Utils.setFilePermission(Paths.SCALING_MIN_FREQ, lookFreq ? "444" : "644");
                                 break;
+                            case PrefKeys.CPU_GOV:
+                                Utils.writeFileWithRoot(Paths.SCALING_GOVERNOR, preferences.getString(PrefKeys.CPU_GOV, "-1"));
+                                break;
                         }
                     }
                 }

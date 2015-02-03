@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ztc1997.kernelhacker.R;
+import com.ztc1997.kernelhacker.extra.Paths;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Utils;
 import com.ztc1997.kernelhacker.view.PreferenceListView;
@@ -23,7 +24,7 @@ import uk.me.lewisdeane.ldialogs.CustomListDialog;
 public class CommonFragment extends Fragment {
 
     private PreferenceSwitchView zramView, cpuLockView;
-    private PreferenceListView cpuMinView,cpuMaxView;
+    private PreferenceListView cpuMinView,cpuMaxView, cpuGovView;
     private SharedPreferences preferences;
 
     public CommonFragment() {
@@ -45,6 +46,7 @@ public class CommonFragment extends Fragment {
         zramView = (PreferenceSwitchView) rootView.findViewById(R.id.zram_switch);
         cpuMinView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_min);
         cpuMaxView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_max);
+        cpuGovView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_gov);
         cpuLockView = (PreferenceSwitchView) rootView.findViewById(R.id.common_cpu_lock);
         zramSetup();
         cpuSetup();
@@ -59,6 +61,9 @@ public class CommonFragment extends Fragment {
         String[] frequencies = Utils.getAvailableFrequencies();
         cpuMinView.setOptions(frequencies);
         cpuMaxView.setOptions(frequencies);
+        
+        String[] govs = Utils.readStringArray(Paths.SCALING_AVAILABLE_GOVERNORS);
+        cpuGovView.setOptions(govs);
     }
 
     @Override
@@ -71,6 +76,7 @@ public class CommonFragment extends Fragment {
         cpuMinView.setSummary(getString(R.string.common_cpu_min_summary, minFreq));
         String maxFreq = Utils.khzToMhzString(preferences.getString(PrefKeys.CPU_MAX_FREQ, "-1"));
         cpuMaxView.setSummary(getString(R.string.common_cpu_min_summary, maxFreq));
+        cpuGovView.setSummary(getString(R.string.common_cpu_gov_summary, preferences.getString(PrefKeys.CPU_GOV, "-1")));
         
         zramView.setChecked(preferences.getBoolean(PrefKeys.ZRAM, false));
     }
@@ -92,6 +98,9 @@ public class CommonFragment extends Fragment {
                 case PrefKeys.CPU_MAX_FREQ:
                     String maxFreq = Utils.khzToMhzString(sharedPreferences.getString(key, "-1"));
                     cpuMaxView.setSummary(getString(R.string.common_cpu_max_summary, maxFreq));
+                    break;
+                case PrefKeys.CPU_GOV:
+                    cpuGovView.setSummary(getString(R.string.common_cpu_gov_summary, preferences.getString(PrefKeys.CPU_GOV, "-1")));
                     break;
             }
         }
