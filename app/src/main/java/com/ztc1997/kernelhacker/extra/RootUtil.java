@@ -102,7 +102,8 @@ public class RootUtil {
 	 */
 	public synchronized int execute(String command, List<String> output) {
 		if (mShell == null)
-			throw new IllegalStateException("shell is not running");
+            return -1;
+			//throw new IllegalStateException("shell is not running");
 
 		mCommandRunning = true;
 		mShell.addCommand(command, 0, commandResultListener);

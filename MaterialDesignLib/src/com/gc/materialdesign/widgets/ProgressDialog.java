@@ -1,5 +1,6 @@
 package com.gc.materialdesign.widgets;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -16,24 +17,24 @@ import com.gc.materialdesign.R;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 
-public class ProgressDialog extends android.app.Dialog{
+public class ProgressDialog extends AlertDialog{
 	
 	Context context;
 	View view;
-	View backView;
+	//View backView;
 	String title;
 	TextView titleTextView;
 	
 	int progressColor = -1;
 	
 	public ProgressDialog(Context context,String title) {
-		super(context, android.R.style.Theme_Translucent);
+		super(context);
 		this.title = title;
 		this.context = context;
 	}
 	
 	public ProgressDialog(Context context,String title, int progressColor) {
-		super(context, android.R.style.Theme_Translucent);
+		super(context);
 		this.title = title;
 		this.progressColor = progressColor;
 		this.context = context;
@@ -46,7 +47,7 @@ public class ProgressDialog extends android.app.Dialog{
 	    setContentView(R.layout.progress_dialog);
 	    
 		view = (RelativeLayout)findViewById(R.id.contentDialog);
-		backView = (RelativeLayout)findViewById(R.id.dialog_rootView);
+/*		backView = (RelativeLayout)findViewById(R.id.dialog_rootView);
 		backView.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
@@ -59,7 +60,7 @@ public class ProgressDialog extends android.app.Dialog{
 				}
 				return false;
 			}
-		});
+		});*/
 		
 	    this.titleTextView = (TextView) findViewById(R.id.title);
 	    setTitle(title);
@@ -70,7 +71,7 @@ public class ProgressDialog extends android.app.Dialog{
 	    
 	    
 	}
-	
+/*	
 	@Override
 	public void show() {
 		// TODO 自动生成的方法存根
@@ -79,7 +80,7 @@ public class ProgressDialog extends android.app.Dialog{
 		view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dialog_main_show_amination));
 		backView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dialog_root_show_amin));
 	}
-	
+	*/
 	// GETERS & SETTERS
 
 	public String getTitle() {
@@ -103,7 +104,7 @@ public class ProgressDialog extends android.app.Dialog{
 	public void setTitleTextView(TextView titleTextView) {
 		this.titleTextView = titleTextView;
 	}
-
+/*
 	@Override
 	public void dismiss() {
 		Animation anim = AnimationUtils.loadAnimation(context, R.anim.dialog_main_hide_amination);
@@ -134,6 +135,6 @@ public class ProgressDialog extends android.app.Dialog{
 		backView.startAnimation(backAnim);
 	}
 	
-	
+	*/
 
 }

@@ -1,5 +1,6 @@
 package com.gc.materialdesign.widgets;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -15,11 +16,11 @@ import android.widget.TextView;
 import com.gc.materialdesign.R;
 import com.gc.materialdesign.views.ButtonFlat;
 
-public class Dialog extends android.app.Dialog{
+public class Dialog extends AlertDialog{
 	
 	Context context;
 	View view;
-	View backView;
+	//View backView;
 	String message;
 	TextView messageTextView;
 	String title;
@@ -35,7 +36,7 @@ public class Dialog extends android.app.Dialog{
 	
 	
 	public Dialog(Context context,String title, String message) {
-		super(context, android.R.style.Theme_Translucent);
+		super(context);
 		this.context = context;// init Context
 		this.message = message;
 		this.title = title;
@@ -58,7 +59,7 @@ public class Dialog extends android.app.Dialog{
 	    setContentView(R.layout.dialog);
 	    
 		view = (RelativeLayout)findViewById(R.id.contentDialog);
-		backView = (RelativeLayout)findViewById(R.id.dialog_rootView);
+/*		backView = (RelativeLayout)findViewById(R.id.dialog_rootView);
 		backView.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
@@ -72,7 +73,7 @@ public class Dialog extends android.app.Dialog{
 				return false;
 			}
 		});
-		
+		*/
 	    this.titleTextView = (TextView) findViewById(R.id.title);
 	    setTitle(title);
 	    
@@ -104,7 +105,7 @@ public class Dialog extends android.app.Dialog{
 			});
 	    }
 	}
-	
+/*	
 	@Override
 	public void show() {
 		// TODO 自动生成的方法存根
@@ -113,7 +114,7 @@ public class Dialog extends android.app.Dialog{
 		view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dialog_main_show_amination));
 		backView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dialog_root_show_amin));
 	}
-	
+	*/
 	// GETERS & SETTERS
 
 	public String getMessage() {
@@ -185,7 +186,7 @@ public class Dialog extends android.app.Dialog{
 			buttonCancel.setOnClickListener(onCancelButtonClickListener);
 	}
 	
-	@Override
+/*	@Override
 	public void dismiss() {
 		Animation anim = AnimationUtils.loadAnimation(context, R.anim.dialog_main_hide_amination);
 		anim.setAnimationListener(new AnimationListener() {
@@ -214,7 +215,7 @@ public class Dialog extends android.app.Dialog{
 		view.startAnimation(anim);
 		backView.startAnimation(backAnim);
 	}
-	
+	*/
 	
 
 }

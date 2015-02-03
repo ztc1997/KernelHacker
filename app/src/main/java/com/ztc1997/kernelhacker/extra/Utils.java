@@ -30,12 +30,17 @@ public class Utils {
     }
     
     public static String getFilePermission(String path){
-        ArrayList<String> list = new ArrayList<String>();
-        MyApplication.getRootUtil().execute("ls -ld " + path + " |awk '{print $1}'|sed 's/^[a-zA-Z-]//'", list);
-        String s1 = permissionStringToInt(list.get(0).substring(0, 2)) + "";
-        String s2 = permissionStringToInt(list.get(0).substring(3, 5)) + "";
-        String s3 = permissionStringToInt(list.get(0).substring(6, 8)) + "";
-        return s1 + s2 + s3;
+        try {
+            ArrayList<String> list = new ArrayList<String>();
+            MyApplication.getRootUtil().execute("ls -ld " + path + " |awk '{print $1}'|sed 's/^[a-zA-Z-]//'", list);
+            String s1 = permissionStringToInt(list.get(0).substring(0, 2)) + "";
+            String s2 = permissionStringToInt(list.get(0).substring(3, 5)) + "";
+            String s3 = permissionStringToInt(list.get(0).substring(6, 8)) + "";
+            return s1 + s2 + s3;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "-1";
     }
     
     private static int permissionStringToInt(String permission){
