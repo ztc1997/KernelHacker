@@ -235,6 +235,9 @@ public class Utils {
     }
     
     public static String khzToMhzString(String khz){
-        return khz.substring(0, khz.length() - 3);
+        if (khz.endsWith("000"))
+            return khz.substring(0, khz.length() - 3);
+        else 
+            return khz;
     }
 }
