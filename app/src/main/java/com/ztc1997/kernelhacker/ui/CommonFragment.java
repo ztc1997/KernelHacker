@@ -13,6 +13,7 @@ import com.ztc1997.kernelhacker.R;
 import com.ztc1997.kernelhacker.extra.Paths;
 import com.ztc1997.kernelhacker.extra.PrefKeys;
 import com.ztc1997.kernelhacker.extra.Utils;
+import com.ztc1997.kernelhacker.view.PreferenceEditTextView;
 import com.ztc1997.kernelhacker.view.PreferenceListView;
 import com.ztc1997.kernelhacker.view.PreferenceSwitchView;
 
@@ -25,6 +26,7 @@ public class CommonFragment extends Fragment {
 
     private PreferenceSwitchView zramView, cpuLockView;
     private PreferenceListView cpuMinView,cpuMaxView, cpuGovView;
+    private PreferenceEditTextView zramSizeView;
     private SharedPreferences preferences;
 
     public CommonFragment() {
@@ -44,6 +46,7 @@ public class CommonFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_common, container, false);
         zramView = (PreferenceSwitchView) rootView.findViewById(R.id.zram_switch);
+        zramSizeView = (PreferenceEditTextView) rootView.findViewById(R.id.zram_disksize);
         cpuMinView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_min);
         cpuMaxView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_max);
         cpuGovView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_gov);
@@ -79,6 +82,7 @@ public class CommonFragment extends Fragment {
         cpuGovView.setSummary(getString(R.string.common_cpu_gov_summary, preferences.getString(PrefKeys.CPU_GOV, "-1")));
         
         zramView.setChecked(preferences.getBoolean(PrefKeys.ZRAM, false));
+        zramSizeView.setSummary(getString(R.string.common_zram_disksize_summary, preferences.getInt(PrefKeys.ZRAM_DISKSIZE, 0) + ""));
     }
 
     @Override
@@ -101,6 +105,9 @@ public class CommonFragment extends Fragment {
                     break;
                 case PrefKeys.CPU_GOV:
                     cpuGovView.setSummary(getString(R.string.common_cpu_gov_summary, preferences.getString(PrefKeys.CPU_GOV, "-1")));
+                    break;
+                case PrefKeys.ZRAM_DISKSIZE:
+                    zramSizeView.setSummary(getString(R.string.common_zram_disksize_summary, preferences.getInt(PrefKeys.ZRAM_DISKSIZE, 0) + ""));
                     break;
             }
         }

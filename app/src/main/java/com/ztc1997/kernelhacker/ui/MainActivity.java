@@ -238,7 +238,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             });
                             dialog1.show();
                         }
-                        Utils.initSysValues(preferences);
+                        initSysValues(preferences);
                         dialog.dismiss();
                     }
                 });
@@ -256,6 +256,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onPause() {
         super.onPause();
         preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
+    public static void initSysValues(SharedPreferences preferences){
+        preferences.edit()
+                .putString(PrefKeys.KERNEL_VERSION, Utils.readOneLine(Paths.INFO_KERNEL_VERSION))
+                .putString(PrefKeys.T2W_INTERAL, Utils.readOneLine(Paths.T2W_INTERVAL))
+                .putString(PrefKeys.T2W_RANGE_X_FROM, Utils.readOneLine(Paths.T2W_X_FROM))
+                .putString(PrefKeys.T2W_RANGE_X_TO, Utils.readOneLine(Paths.T2W_X_TO))
+                .putString(PrefKeys.T2W_RANGE_Y_FROM, Utils.readOneLine(Paths.T2W_Y_FROM))
+                .putString(PrefKeys.T2W_RANGE_Y_TO, Utils.readOneLine(Paths.T2W_Y_TO))
+                .putBoolean(PrefKeys.T2W, !Utils.readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
+                .putString(PrefKeys.CPU_MAX_FREQ, Utils.readOneLine(Paths.CPUINFO_MAX_FREQ))
+                .putString(PrefKeys.CPU_MIN_FREQ, Utils.readOneLine(Paths.CPUINFO_MIN_FREQ))
+                .putBoolean(PrefKeys.ZRAM, Utils.readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
+                .putBoolean(PrefKeys.CPU_LOCK_FREQ, Utils.getFilePermission(Paths.SCALING_MAX_FREQ).equals("444"))
+                .putString(PrefKeys.CPU_GOV, Utils.readOneLine(Paths.SCALING_GOVERNOR))
+                .putInt(PrefKeys.ZRAM_DISKSIZE, Integer.parseInt(Utils.readOneLine(Paths.ZRAM_DISKSIZE)) >>> 20)
+                .apply();
     }
 
     private final SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -311,6 +329,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 break;
                             case PrefKeys.CPU_GOV:
                                 Utils.writeFileWithRoot(Paths.SCALING_GOVERNOR, preferences.getString(PrefKeys.CPU_GOV, "-1"));
+                                break;
+                            case PrefKeys.ZRAM_DISKSIZE:
+                                Utils.writeFileWithRoot(Paths.ZRAM_DISKSIZE, (preferences.getInt(key, 0) << 20) + "");
                                 break;
                         }
                     }

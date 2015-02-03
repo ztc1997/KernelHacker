@@ -4,12 +4,36 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
     
-    <com.ztc1997.kernelhacker.view.PreferenceSwitchView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/zram_switch"
-        app:pv_title="@string/common_zram_title"
-        app:pv_summary="@string/common_zram_summary"
-        app:pv_key="pref_zram"/>
+        android:divider="?android:attr/listDivider"
+        android:showDividers="middle">
+
+        <TextView
+            style="@style/CardTitleTextView"
+            android:text="@string/common_zram_title"/>
+        
+        <com.ztc1997.kernelhacker.view.PreferenceSwitchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/zram_switch"
+            app:pv_title="@string/common_zram_title"
+            app:pv_summary="@string/common_zram_summary"
+            app:pv_key="pref_zram"/>
+        
+        <com.ztc1997.kernelhacker.view.PreferenceEditTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/zram_disksize"
+            app:pv_key="pref_zram_disksize"
+            app:pv_title="@string/common_zram_disksize_title"
+            app:pv_summary="@string/common_zram_disksize_summary"
+            app:petv_minValue="0"
+            app:petv_maxValue="300"
+            app:petv_interval="10"/>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

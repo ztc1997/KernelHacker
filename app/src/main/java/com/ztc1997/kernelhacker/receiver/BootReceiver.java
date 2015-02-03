@@ -36,7 +36,6 @@ public class BootReceiver extends BroadcastReceiver {
             preferences.edit().putBoolean(PrefKeys.BOOTED, true).apply();
             if (!preferences.getString(PrefKeys.KERNEL_VERSION, "").equals(Utils.readOneLine(Paths.INFO_KERNEL_VERSION))){
                 showNotifition(context, R.string.notifition_boot_kernel_changed_title, R.string.notifition_boot_setting_failed_text);
-                Utils.initSysValues(preferences);
                 return;
             }
             bootSetup(context, preferences);
@@ -91,6 +90,7 @@ public class BootReceiver extends BroadcastReceiver {
                     Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "444");
                 }
                 Utils.writeFileWithRoot(Paths.SCALING_GOVERNOR, preferences.getString(PrefKeys.CPU_GOV, "-1"));
+                Utils.writeFileWithRoot(Paths.ZRAM_DISKSIZE, (preferences.getInt(PrefKeys.ZRAM_DISKSIZE, 0) << 20) + "");
                 MyApplication.getRootUtil().execute(preferences.getBoolean(PrefKeys.ZRAM, false) ?
                         Commands.ENABLE_ZRAM : Commands.DISABLE_ZRAM, null);
             }
