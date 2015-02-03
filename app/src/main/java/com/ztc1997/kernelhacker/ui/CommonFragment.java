@@ -57,19 +57,7 @@ public class CommonFragment extends Fragment {
     private void cpuSetup(){
         String[] frequencies = Utils.getAvailableFrequencies();
         cpuMinView.setOptions(frequencies);
-        cpuMinView.setListClickListener(new CustomListDialog.ListClickListener() {
-            @Override
-            public void onListItemSelected(int position, String[] items, String item) {
-                preferences.edit().putString(PrefKeys.CPU_MIN_FREQ, item).apply();
-            }
-        });
         cpuMaxView.setOptions(frequencies);
-        cpuMaxView.setListClickListener(new CustomListDialog.ListClickListener() {
-            @Override
-            public void onListItemSelected(int position, String[] items, String item) {
-                preferences.edit().putString(PrefKeys.CPU_MAX_FREQ, item).apply();
-            }
-        });
     }
 
     @Override
