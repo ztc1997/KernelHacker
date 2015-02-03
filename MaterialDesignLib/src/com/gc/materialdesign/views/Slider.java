@@ -153,6 +153,9 @@ public class Slider extends CustomView {
 	public boolean onTouchEvent(MotionEvent event) {
 		isLastTouch = true;
 		if (isEnabled()) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN)
+                getParent().requestDisallowInterceptTouchEvent(true);
+            
 			if (event.getAction() == MotionEvent.ACTION_DOWN
 					|| event.getAction() == MotionEvent.ACTION_MOVE) {
 				if (numberIndicator != null

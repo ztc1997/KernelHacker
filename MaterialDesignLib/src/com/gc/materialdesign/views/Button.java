@@ -82,7 +82,7 @@ public abstract class Button extends CustomView {
 				if ((event.getX() <= getWidth() && event.getX() >= 0)
 						&& (event.getY() <= getHeight() && event.getY() >= 0)) {
 					radius++;
-					if(!clickAfterRipple && onClickListener != null){
+					if(onClickListener != null){
 						onClickListener.onClick(this);
 					}
 				} else {
