@@ -18,4 +18,11 @@
     <declare-styleable name="PreferenceSwitchView">
         <attr name="psv_defaultValue" format="boolean"/>
     </declare-styleable>
+    
+    <declare-styleable name="PreferenceEditTextView">
+        <attr name="petv_maxValue" format="integer"/>
+        <attr name="petv_minValue" format="integer"/>
+        <attr name="petv_defaultValue" format="integer"/>
+        <attr name="petv_interval" format="integer"/>
+    </declare-styleable>
 </resources>
