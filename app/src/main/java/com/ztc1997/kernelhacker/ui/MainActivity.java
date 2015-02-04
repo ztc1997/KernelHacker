@@ -1,5 +1,6 @@
 package com.ztc1997.kernelhacker.ui;
 
+import java.io.File;
 import java.util.Locale;
 
 import android.app.Fragment;
@@ -239,6 +240,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public static void initSysValues(SharedPreferences preferences){
         preferences.edit()
+                .putBoolean(PrefKeys.SUPPORT_SHAKE2WAKE, new File(Paths.SHAKE2WAKE).exists())
+                .putBoolean(PrefKeys.SUPPORT_T2W, new File(Paths.T2W_PREVENT_SLEEP).exists())
+                .putBoolean(PrefKeys.SUPPORT_CPU, new File(Paths.SCALING_AVAILABLE_FREQ).exists())
+                .putBoolean(PrefKeys.SUPPORT_ZRAM, new File(Paths.ZRAM_SYS_DIR).exists())
+                .putBoolean(PrefKeys.SUPPORT_IO, new File(Paths.IO_READ_AHEAD_SIZE).exists())
+                .putBoolean(PrefKeys.SUPPORT_FASTCHR, new File(Paths.FAST_CHARGE).exists())
                 .putString(PrefKeys.KERNEL_VERSION, Utils.readOneLine(Paths.INFO_KERNEL_VERSION))
                 .putInt(PrefKeys.T2W_INTERAL, Utils.tryParseInt(Utils.readOneLine(Paths.T2W_INTERVAL), 20))
                 .putString(PrefKeys.T2W_RANGE_X_FROM, Utils.readOneLine(Paths.T2W_X_FROM))
@@ -256,6 +263,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 .putString(PrefKeys.IO_SCHEDULER, Utils.getIOScheduler())
                 .putInt(PrefKeys.IO_READ_AHEAD_SIZE, Utils.tryParseInt(Utils.readOneLine(Paths.IO_READ_AHEAD_SIZE), 128))
                 .putBoolean(PrefKeys.FAST_CHARGE, Utils.readOneLine(Paths.FAST_CHARGE).equals("1"))
+                .putBoolean(PrefKeys.SHAKE2WAKE, Utils.readOneLineWithRoot(Paths.SHAKE2WAKE).contains("1"))
                 .apply();
     }
 
@@ -334,6 +342,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 break;
                             case PrefKeys.FAST_CHARGE:
                                 Utils.writeFileWithRoot(Paths.FAST_CHARGE, preferences.getBoolean(key, false) ? "1" : "0");
+                                break;
+                            case PrefKeys.SHAKE2WAKE:
+                                Utils.writeFileWithRoot(Paths.SHAKE2WAKE, preferences.getBoolean(key, false) ? "1" : "0");
                                 break;
                         }
                     }

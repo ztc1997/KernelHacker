@@ -21,7 +21,8 @@
             android:id="@+id/zram_switch"
             app:pv_title="@string/common_zram_title"
             app:pv_summary="@string/common_zram_summary"
-            app:pv_key="pref_zram"/>
+            app:pv_key="pref_zram"
+            app:pv_dependency="support_zram"/>
         
         <com.ztc1997.kernelhacker.view.PreferenceEditTextView
             android:layout_width="match_parent"
@@ -32,7 +33,8 @@
             app:pv_summary="@string/common_zram_disksize_summary"
             app:petv_minValue="0"
             app:petv_maxValue="300"
-            app:petv_interval="10"/>
+            app:petv_interval="10"
+            app:pv_dependency="support_zram"/>
 
         <com.ztc1997.kernelhacker.view.PreferenceEditTextView
             android:layout_width="match_parent"
@@ -44,7 +46,8 @@
             app:petv_minValue="0"
             app:petv_maxValue="100"
             app:petv_defaultValue="18"
-            app:petv_interval="1"/>
+            app:petv_interval="1"
+            app:pv_dependency="support_zram"/>
 
     </LinearLayout>
 

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class Utils {
     
     public static String getFilePermission(String path){
         try {
-            ArrayList<String> list = new ArrayList<String>();
+            List<String> list = new LinkedList<>();
             MyApplication.getRootUtil().execute("ls -ld " + path + " |awk '{print $1}'|sed 's/^[a-zA-Z-]//'", list);
             String s1 = permissionStringToInt(list.get(0).substring(0, 2)) + "";
             String s2 = permissionStringToInt(list.get(0).substring(3, 5)) + "";
@@ -272,5 +273,15 @@ public class Utils {
             }
         }
         return schedulers;
+    }
+    
+    public static String readOneLineWithRoot(String path){
+        try {
+            List<String> list = new LinkedList<>();
+            MyApplication.getRootUtil().execute("cat " + path, list);
+            return list.get(0);
+        }catch (Exception e){
+            return "";
+        }
     }
 }

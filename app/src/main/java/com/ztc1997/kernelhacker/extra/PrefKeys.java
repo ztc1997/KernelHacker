@@ -16,6 +16,8 @@ public interface PrefKeys {
     String T2W_RANGE_X_TO = "pref_t2w_range_x_to";
     String T2W_RANGE_Y_TO = "pref_t2w_range_y_to";
     
+    String SHAKE2WAKE = "pref_shake2wake";
+    
     String CPU_MAX_FREQ = "pref_cpu_max_freq";
     String CPU_MIN_FREQ = "pref_cpu_min_freq";
     String CPU_LOCK_FREQ = "pref_cpu_lock_freq";
@@ -31,4 +33,11 @@ public interface PrefKeys {
     String FAST_CHARGE = "pref_fast_charge";
     
     String SET_ON_BOOT = "pref_set_on_boot";
+    
+    String SUPPORT_CPU = "support_cpu";
+    String SUPPORT_ZRAM = "support_zram";
+    String SUPPORT_T2W = "support_t2w";
+    String SUPPORT_IO = "support_io";
+    String SUPPORT_SHAKE2WAKE = "support_shake2wake";
+    String SUPPORT_FASTCHR = "support_fastchr";
 }

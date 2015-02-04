@@ -20,6 +20,8 @@
             
             <include layout="@layout/include_t2w"/>
             
+            <include layout="@layout/include_shake2wake"/>
+            
         </LinearLayout>
         
     </ScrollView>
