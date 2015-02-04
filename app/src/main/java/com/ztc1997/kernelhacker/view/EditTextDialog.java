@@ -73,7 +73,14 @@ public class EditTextDialog extends AlertDialog{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    setValue(Integer.parseInt(s.toString()));
+                    int i = Integer.parseInt(s.toString());
+                    value = i;
+                    if (i < min)
+                        value = min;
+                    if (i > max)
+                        value = max;
+                    if (slider != null)
+                        slider.setValue(value);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }

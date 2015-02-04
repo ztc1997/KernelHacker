@@ -94,6 +94,9 @@ public class BootReceiver extends BroadcastReceiver {
                 Utils.writeFileWithRoot(Paths.ZRAM_SWAPPINESS, preferences.getInt(PrefKeys.ZRAM_SWAPPINESS, 18) + "");
                 MyApplication.getRootUtil().execute(preferences.getBoolean(PrefKeys.ZRAM, false) ?
                         Commands.ENABLE_ZRAM : Commands.DISABLE_ZRAM, null);
+                Utils.writeFileWithRoot(Paths.IO_READ_AHEAD_SIZE, preferences.getInt(PrefKeys.IO_READ_AHEAD_SIZE, 128)+"");
+                Utils.writeFileWithRoot(Paths.IO_SCHEDULER, preferences.getString(PrefKeys.IO_SCHEDULER, ""));
+                Utils.writeFileWithRoot(Paths.IO_SCHEDULER_MTD, preferences.getString(PrefKeys.IO_SCHEDULER, ""));
             }
         }.start();
     }

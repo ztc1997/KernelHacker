@@ -274,6 +274,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 .putString(PrefKeys.CPU_GOV, Utils.readOneLine(Paths.SCALING_GOVERNOR))
                 .putInt(PrefKeys.ZRAM_DISKSIZE, Utils.tryParseInt(Utils.readOneLine(Paths.ZRAM_DISKSIZE), -1) >>> 20)
                 .putInt(PrefKeys.ZRAM_SWAPPINESS, Utils.tryParseInt(Utils.readOneLine(Paths.ZRAM_SWAPPINESS), 18))
+                .putString(PrefKeys.IO_SCHEDULER, Utils.getIOScheduler())
+                .putInt(PrefKeys.IO_READ_AHEAD_SIZE, Utils.tryParseInt(Utils.readOneLine(Paths.IO_READ_AHEAD_SIZE), 128))
                 .apply();
     }
 
@@ -340,6 +342,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 break;
                             case PrefKeys.ZRAM_SWAPPINESS:
                                 Utils.writeFileWithRoot(Paths.ZRAM_SWAPPINESS, preferences.getInt(key, 18) + "");
+                                break;
+                            case PrefKeys.IO_READ_AHEAD_SIZE:
+                                Utils.writeFileWithRoot(Paths.IO_READ_AHEAD_SIZE, preferences.getInt(key, 128)+"");
+                                break;
+                            case PrefKeys.IO_SCHEDULER:
+                                Utils.writeFileWithRoot(Paths.IO_SCHEDULER, preferences.getString(key, ""));
+                                Utils.writeFileWithRoot(Paths.IO_SCHEDULER_MTD, preferences.getString(key, ""));
                                 break;
                         }
                     }

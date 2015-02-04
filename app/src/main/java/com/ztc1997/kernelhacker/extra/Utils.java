@@ -235,4 +235,42 @@ public class Utils {
         else 
             return khz;
     }
+
+    public static String getIOScheduler() {
+        String scheduler = null;
+        String file = Paths.IO_SCHEDULER;
+        if (!(new File(file)).exists()) {
+            file = Paths.IO_SCHEDULER_MTD;
+        }
+        String[] schedulers = readStringArray(file);
+        if (schedulers != null) {
+            for (String s : schedulers) {
+                if (s.charAt(0) == '[') {
+                    scheduler = s.substring(1, s.length() - 1);
+                    break;
+                }
+            }
+        }
+        return scheduler;
+    }
+
+    public static String[] getAvailableIOSchedulers() {
+        String[] schedulers = null;
+        String file = Paths.IO_SCHEDULER;
+        if (!(new File(file)).exists()) {
+            file = Paths.IO_SCHEDULER;
+        }
+        String[] aux = readStringArray(file);
+        if (aux != null) {
+            schedulers = new String[aux.length];
+            for (int i = 0; i < aux.length; i++) {
+                if (aux[i].charAt(0) == '[') {
+                    schedulers[i] = aux[i].substring(1, aux[i].length() - 1);
+                } else {
+                    schedulers[i] = aux[i];
+                }
+            }
+        }
+        return schedulers;
+    }
 }

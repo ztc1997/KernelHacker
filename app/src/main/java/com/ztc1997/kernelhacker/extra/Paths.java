@@ -35,4 +35,8 @@ public interface Paths {
     String ZRAM_MEM_USED_TOTAL = ZRAM_SYS_DIR + "mem_used_total";
     String SWAP_STATE = "/proc/swaps";
     String ZRAM_SWAPPINESS = "/proc/sys/vm/swappiness";
+    
+    String IO_READ_AHEAD_SIZE = "/sys/block/mmcblk0/queue/read_ahead_kb";
+    String IO_SCHEDULER = "/sys/block/mmcblk0/queue/scheduler";
+    String IO_SCHEDULER_MTD = "/sys/block/mtdblock0/queue/scheduler";
 }

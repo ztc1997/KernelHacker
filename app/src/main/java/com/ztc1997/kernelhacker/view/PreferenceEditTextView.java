@@ -1,6 +1,7 @@
 package com.ztc1997.kernelhacker.view;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
@@ -58,6 +59,28 @@ public class PreferenceEditTextView extends PreferenceView {
         });
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        preferences.registerOnSharedPreferenceChangeListener(changeListener);
+        value = preferences.getInt(key, value);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(PreferenceEditTextView.this.key)){
+                value = preferences.getInt(key, value);
+            }
+        }
+    };
+
     public int getMin() {
         return min;
     }
@@ -76,6 +99,22 @@ public class PreferenceEditTextView extends PreferenceView {
 
     public EditTextDialog.OnEditTextSetListener getOnEditTextSetListener() {
         return onEditTextSetListener;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public void setInterval(int interval) {
+        this.interval = interval;
     }
 
     public void setOnEditTextSetListener(EditTextDialog.OnEditTextSetListener onEditTextSetListener) {
