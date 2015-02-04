@@ -1,1 +1,2 @@
 include ':app', 'FloatingActionButton-library', 'MPChartLib', ':MaterialDesignLib', ':nineoldandroids-2.4.0', 'L-Dialogs'
+include ':LicensesDialog-library'

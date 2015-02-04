@@ -30,4 +30,5 @@ dependencies {
     compile project(':MPChartLib')
     compile project(':MaterialDesignLib')
     compile project(':L-Dialogs')
+    compile project(':LicensesDialog-library')
 }

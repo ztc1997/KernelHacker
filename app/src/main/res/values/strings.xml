@@ -56,5 +56,8 @@
     <string name="feature_fast_chgarge_title">Fast Chgarge</string>
 
     <string name="misc_set_on_boot_title">Set On Boot</string>
+    <string name="misc_about_title">About</string>
+    <string name="misc_about_licenses_title">Open Source Licenses</string>
+    <string name="misc_about_text">This application is written by ztc1997\nUsed multiple open source project.</string>
 
 </resources>

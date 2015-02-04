@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<notices>
+    <notice>
+        <name>Nine Old Androids</name>
+        <url>http://nineoldandroids.com/</url>
+        <copyright>Copyright (C) 2010 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>MPAndroidChart</name>
+        <url>http://android-arsenal.com/details/1/741</url>
+        <copyright>Copyright 2014 Philipp Jahoda</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Material Design Android Library</name>
+        <url>https://android-arsenal.com/details/1/1156</url>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>L-Dialogs</name>
+        <url>https://github.com/lewisjdeane/L-Dialogs</url>
+    </notice>
+    <notice>
+        <name>FloatingActionButton</name>
+        <url>http://android-arsenal.com/details/1/824</url>
+        <copyright>Copyright (c) 2014 Oleksandr Melnykov</copyright>
+        <license>MIT License</license>
+    </notice>
+</notices>
