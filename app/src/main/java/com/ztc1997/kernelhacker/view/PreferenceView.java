@@ -8,9 +8,12 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.ztc1997.kernelhacker.R;
 
 /**
@@ -19,9 +22,9 @@ import com.ztc1997.kernelhacker.R;
 public class PreferenceView extends RelativeLayout {
     protected String key, dependency;
     private TextView title, summary;
+    private MaterialRippleLayout rootView;
     protected SharedPreferences preferences;
     private Point downPoint;
-    private OnClickListener onClickListener;
 
     public PreferenceView(Context context) {
         this(context, null);
@@ -41,6 +44,7 @@ public class PreferenceView extends RelativeLayout {
         LayoutInflater.from(context).inflate(layoutRes, this);
         title = (TextView) findViewById(R.id.preferencr_title);
         summary = (TextView) findViewById(R.id.preferencr_summary);
+        rootView = (MaterialRippleLayout) findViewById(R.id.preferencr_ripple);
 
         if (attrs != null) {
             TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.PreferenceView);
@@ -100,8 +104,9 @@ public class PreferenceView extends RelativeLayout {
 
     @Override
     public void setOnClickListener(OnClickListener l) {
-        onClickListener = l;
+        rootView.setOnClickListener(l);
     }
+/*
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -131,6 +136,7 @@ public class PreferenceView extends RelativeLayout {
         super.onTouchEvent(event);
         return true;
     }
+*/
 
     @Override
     protected void onAttachedToWindow() {

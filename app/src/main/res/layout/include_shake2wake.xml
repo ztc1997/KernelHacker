@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    <com.ztc1997.kernelhacker.view.PreferenceSwitchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:pv_key="pref_shake2wake"
-        app:pv_title="@string/feature_shake2wake_title"/>
+        <com.ztc1997.kernelhacker.view.PreferenceSwitchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pv_key="pref_shake2wake"
+            app:pv_title="@string/feature_shake2wake_title"/>
 
 </android.support.v7.widget.CardView>
