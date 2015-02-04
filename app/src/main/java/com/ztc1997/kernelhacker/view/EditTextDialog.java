@@ -33,7 +33,6 @@ public class EditTextDialog extends AlertDialog{
 	
 	Context context;
 	View view;
-	//View backView;
 	String title;
 	TextView titleTextView;
 	
@@ -57,7 +56,6 @@ public class EditTextDialog extends AlertDialog{
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 	    
 		view = findViewById(R.id.contentDialog);
-		//backView = findViewById(R.id.dialog_rootView);
         editText = (EditText) findViewById(R.id.dialog_edit_edit);
         slider = (Slider) findViewById(R.id.dialog_edit_slider);
         subBtn = (Button) findViewById(R.id.dialog_edit_sub);
@@ -75,12 +73,7 @@ public class EditTextDialog extends AlertDialog{
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    value = Integer.parseInt(s.toString());
-                    if (value < min)
-                        value = min;
-                    if (value > max)
-                        value = max;
-                    slider.setValue(value);
+                    setValue(Integer.parseInt(s.toString()));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
@@ -95,37 +88,23 @@ public class EditTextDialog extends AlertDialog{
         slider.setOnValueChangedListener(new Slider.OnValueChangedListener() {
             @Override
             public void onValueChanged(int value) {
-                editText.setText(value + "");
+                setValue(value);
             }
         });
         
         subBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.setText(value - interval + "");
+                setValue(value - interval);
             }
         });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.setText(value + interval + "");
+                setValue(value + interval);
             }
         });
-        
-/*        backView.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getX() < view.getLeft() 
-						|| event.getX() >view.getRight()
-						|| event.getY() > view.getBottom() 
-						|| event.getY() < view.getTop()) {
-					dismiss();
-				}
-				return false;
-			}
-		});*/
 		
 	    this.titleTextView = (TextView) findViewById(R.id.title);
 	    setTitle(title);
@@ -150,17 +129,8 @@ public class EditTextDialog extends AlertDialog{
             }
         });
         
-        editText.setText(value + "");
+        setValue(value);
 	}
-/*	
-	@Override
-	public void show() {
-		// TODO 自动生成的方法存根
-		super.show();
-		// set dialog enter animations
-		view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dialog_main_show_amination));
-		backView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.dialog_root_show_amin));
-	}*/
 	
 	// GETERS & SETTERS
 	public String getTitle() {
@@ -200,36 +170,6 @@ public class EditTextDialog extends AlertDialog{
 	public void setButtonCancel(ButtonFlat buttonCancel) {
 		this.buttonCancel = buttonCancel;
 	}
-/*	
-	@Override
-	public void dismiss() {
-		Animation anim = AnimationUtils.loadAnimation(context, R.anim.dialog_main_hide_amination);
-		anim.setAnimationListener(new AnimationListener() {
-			
-			@Override
-			public void onAnimationStart(Animation animation) {
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-			}
-			
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				view.post(new Runnable() {
-					@Override
-					public void run() {
-			        	EditTextDialog.super.dismiss();
-			        }
-			    });
-				
-			}
-		});
-		Animation backAnim = AnimationUtils.loadAnimation(context, R.anim.dialog_root_hide_amin);
-		
-		view.startAnimation(anim);
-		backView.startAnimation(backAnim);
-	}*/
 
     public EditTextDialog setOnEditTextSetListener(OnEditTextSetListener onEditTextSetListener) {
         this.onEditTextSetListener = onEditTextSetListener;
@@ -269,8 +209,14 @@ public class EditTextDialog extends AlertDialog{
 
     public EditTextDialog setValue(int value) {
         this.value = value;
-        if (editText != null)
-            editText.setText(value + "");
+        if (value < min)
+            this.value = min;
+        if (value > max)
+            this.value = max;
+        if (editText != null && !editText.getText().toString().equals(this.value + ""))
+            editText.setText(this.value + "");
+        if (slider != null)
+            slider.setValue(this.value);
         return this;
     }
 

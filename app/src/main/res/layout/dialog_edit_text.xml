@@ -33,7 +33,8 @@ xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/dialog_edit_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                materialdesign:iconDrawable="@drawable/ic_remove_white_36dp"/>
+                materialdesign:iconDrawable="@drawable/ic_remove_white_36dp"
+                android:background="@android:color/holo_red_dark" />
         
         </FrameLayout>
         
@@ -56,7 +57,8 @@ xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/dialog_edit_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                materialdesign:iconDrawable="@drawable/ic_add_white_36dp"/>
+                materialdesign:iconDrawable="@drawable/ic_add_white_36dp"
+                android:background="@android:color/holo_green_dark" />
 
         </FrameLayout>
         
