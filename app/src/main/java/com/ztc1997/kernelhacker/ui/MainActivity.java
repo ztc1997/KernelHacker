@@ -317,10 +317,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             case PrefKeys.CPU_MIN_FREQ:
                                 Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "644");
                                 Utils.writeFileWithRoot(Paths.SCALING_MIN_FREQ, preferences.getString(key, "-1"));
+                                if (preferences.getBoolean(PrefKeys.CPU_LOCK_FREQ, false))
+                                    Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "444");
                                 break;
                             case PrefKeys.CPU_MAX_FREQ:
                                 Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "644");
                                 Utils.writeFileWithRoot(Paths.SCALING_MAX_FREQ, preferences.getString(key, "-1"));
+                                if (preferences.getBoolean(PrefKeys.CPU_LOCK_FREQ, false))
+                                    Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "444");
                                 break;
                             case PrefKeys.CPU_LOCK_FREQ:
                                 boolean lookFreq = preferences.getBoolean(key, false);
