@@ -99,6 +99,9 @@ public class EditTextDialog extends AlertDialog{
             }
         });
         
+        subBtn.setClickAfterRipple(false);
+        addBtn.setClickAfterRipple(false);
+        
         subBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

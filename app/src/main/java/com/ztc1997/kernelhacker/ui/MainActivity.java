@@ -98,29 +98,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_info, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
@@ -156,6 +133,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return new CommonFragment();
                 case 2:
                     return new FeatureFragment();
+                case 3:
+                    return new MiscFragment();
                 default:
                     return PlaceholderFragment.newInstance(position);
             }
@@ -178,7 +157,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 2:
                     return getString(R.string.title_features).toUpperCase(l);
                 case 3:
-                    return getString(R.string.title_settings).toUpperCase(l);
+                    return getString(R.string.title_misc).toUpperCase(l);
             }
             return null;
         }

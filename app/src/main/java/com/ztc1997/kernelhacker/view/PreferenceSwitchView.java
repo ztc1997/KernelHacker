@@ -89,5 +89,6 @@ public class PreferenceSwitchView extends PreferenceView {
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         switchView.setEnabled(enabled);
+        switchView.setAlpha(enabled ? 1f : 0.5f);
     }
 }

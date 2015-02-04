@@ -185,4 +185,12 @@ public abstract class Button extends CustomView {
 	public float getRippleSpeed() {
 		return this.rippleSpeed;
 	}
+
+    public boolean isClickAfterRipple() {
+        return clickAfterRipple;
+    }
+
+    public void setClickAfterRipple(boolean clickAfterRipple) {
+        this.clickAfterRipple = clickAfterRipple;
+    }
 }

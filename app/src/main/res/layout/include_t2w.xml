@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/t2w_auto_switch"
             app:pv_title="@string/feature_t2w_auto_title"
+            app:pv_summary="@string/feature_t2w_auto_summury"
             app:pv_key="pref_t2w_auto"
             app:pv_dependency="pref_t2w"/>
         
