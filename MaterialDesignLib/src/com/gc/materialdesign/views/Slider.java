@@ -253,7 +253,7 @@ public class Slider extends CustomView {
 	}
 
 	public void setValue(final int value) {
-		if (placedBall == false)
+		if (!placedBall)
 			post(new Runnable() {
 
 				@Override
@@ -262,11 +262,18 @@ public class Slider extends CustomView {
 				}
 			});
 		else {
-			this.value = value;
+            int newValue = value;
+            if (value < min)
+                newValue = min;
+            if (value > max)
+                newValue = max;
 			float division = (ball.xFin - ball.xIni) / max;
 			ViewHelper.setX(ball,
-					value * division + getHeight() / 2 - ball.getWidth() / 2);
+                    newValue * division + getHeight() / 2 - ball.getWidth() / 2);
 			ball.changeBackground();
+            if (this.value != newValue) {
+                this.value = newValue;
+            }
 		}
 
 	}

@@ -117,4 +117,11 @@ public class ButtonFlat extends Button {
         	return textButton.getText().toString();
  	}
 
+    public void setTypeface(Typeface typeface) {
+        textButton.setTypeface(typeface);
+    }
+
+    public void setTextSize(int complexUnitSp, int itemTextSize) {
+        textButton.setTextSize(complexUnitSp, itemTextSize);
+    }
 }
