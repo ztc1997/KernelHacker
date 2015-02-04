@@ -43,6 +43,14 @@ public class Utils {
         return "-1";
     }
     
+    public static int tryParseInt(String s, int defaultValue){
+        try {
+            return Integer.parseInt(s);
+        }catch (NumberFormatException e){
+            return defaultValue;
+        }
+    }
+    
     private static int permissionStringToInt(String permission){
         int rc = 0;
         if (permission.contains("x"))

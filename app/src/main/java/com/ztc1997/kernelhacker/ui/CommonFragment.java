@@ -26,7 +26,7 @@ public class CommonFragment extends Fragment {
 
     private PreferenceSwitchView zramView, cpuLockView;
     private PreferenceListView cpuMinView,cpuMaxView, cpuGovView;
-    private PreferenceEditTextView zramSizeView;
+    private PreferenceEditTextView zramSizeView, zramSwappinessView;
     private SharedPreferences preferences;
 
     public CommonFragment() {
@@ -47,6 +47,7 @@ public class CommonFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_common, container, false);
         zramView = (PreferenceSwitchView) rootView.findViewById(R.id.zram_switch);
         zramSizeView = (PreferenceEditTextView) rootView.findViewById(R.id.zram_disksize);
+        zramSwappinessView = (PreferenceEditTextView) rootView.findViewById(R.id.zram_swappiness);
         cpuMinView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_min);
         cpuMaxView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_max);
         cpuGovView = (PreferenceListView) rootView.findViewById(R.id.common_cpu_gov);
@@ -83,6 +84,7 @@ public class CommonFragment extends Fragment {
         
         zramView.setChecked(preferences.getBoolean(PrefKeys.ZRAM, false));
         zramSizeView.setSummary(getString(R.string.common_zram_disksize_summary, preferences.getInt(PrefKeys.ZRAM_DISKSIZE, 0) + ""));
+        zramSwappinessView.setSummary(getString(R.string.common_zram_swappiness_summary, preferences.getInt(PrefKeys.ZRAM_SWAPPINESS, 18) + ""));
     }
 
     @Override
@@ -108,6 +110,9 @@ public class CommonFragment extends Fragment {
                     break;
                 case PrefKeys.ZRAM_DISKSIZE:
                     zramSizeView.setSummary(getString(R.string.common_zram_disksize_summary, preferences.getInt(PrefKeys.ZRAM_DISKSIZE, 0) + ""));
+                    break;
+                case PrefKeys.ZRAM_SWAPPINESS:
+                    zramSwappinessView.setSummary(getString(R.string.common_zram_swappiness_summary, preferences.getInt(PrefKeys.ZRAM_SWAPPINESS, 18) + ""));
                     break;
             }
         }

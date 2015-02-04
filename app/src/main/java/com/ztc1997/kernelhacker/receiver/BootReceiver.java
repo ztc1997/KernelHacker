@@ -91,6 +91,7 @@ public class BootReceiver extends BroadcastReceiver {
                 }
                 Utils.writeFileWithRoot(Paths.SCALING_GOVERNOR, preferences.getString(PrefKeys.CPU_GOV, "-1"));
                 Utils.writeFileWithRoot(Paths.ZRAM_DISKSIZE, (preferences.getInt(PrefKeys.ZRAM_DISKSIZE, 0) << 20) + "");
+                Utils.writeFileWithRoot(Paths.ZRAM_SWAPPINESS, preferences.getInt(PrefKeys.ZRAM_SWAPPINESS, 18) + "");
                 MyApplication.getRootUtil().execute(preferences.getBoolean(PrefKeys.ZRAM, false) ?
                         Commands.ENABLE_ZRAM : Commands.DISABLE_ZRAM, null);
             }

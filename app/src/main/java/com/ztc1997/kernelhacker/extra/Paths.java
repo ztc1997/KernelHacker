@@ -34,4 +34,5 @@ public interface Paths {
     String ZRAM_ORIGINAL_DATA_SIZE = ZRAM_SYS_DIR + "orig_data_size";
     String ZRAM_MEM_USED_TOTAL = ZRAM_SYS_DIR + "mem_used_total";
     String SWAP_STATE = "/proc/swaps";
+    String ZRAM_SWAPPINESS = "/proc/sys/vm/swappiness";
 }

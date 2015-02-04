@@ -45,5 +45,7 @@
     <string name="common_cpu_gov_summary">Current Governor: %1$s</string>
     <string name="common_cpu_lock_title">Lock Frequency</string>
     <string name="common_cpu_lock_summary">Prevent frequency from being changed by other apps.</string>
+    <string name="common_zram_swappiness_title">Swappiness</string>
+    <string name="common_zram_swappiness_summary">The positive degree of using swap &amp; zram. Current: %1$s</string>
 
 </resources>

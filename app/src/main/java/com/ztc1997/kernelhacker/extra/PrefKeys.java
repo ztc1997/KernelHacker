@@ -24,4 +24,5 @@ public interface PrefKeys {
     
     String ZRAM = "pref_zram";
 	String ZRAM_DISKSIZE = "pref_zram_disksize";
+    String ZRAM_SWAPPINESS = "pref_zram_swappiness";
 }

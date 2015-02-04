@@ -11,7 +11,7 @@ import com.ztc1997.kernelhacker.R;
  * Created by Alex on 2015/2/3.
  */
 public class PreferenceEditTextView extends PreferenceView {
-    private int min, max = 100, value, interval = 1;
+    private int min = 0, max = 100, value = min, interval = 1;
     private EditTextDialog.OnEditTextSetListener onEditTextSetListener;
     
     public PreferenceEditTextView(Context context) {
@@ -44,7 +44,8 @@ public class PreferenceEditTextView extends PreferenceView {
                         .setOnEditTextSetListener(new EditTextDialog.OnEditTextSetListener() {
                             @Override
                             public void onEditTextSet(int edit) {
-                                preferences.edit().putInt(key, edit).apply();
+                                if (key != null)
+                                    preferences.edit().putInt(key, edit).apply();
                                 if (onEditTextSetListener != null)
                                     onEditTextSetListener.onEditTextSet(edit);
                             }
