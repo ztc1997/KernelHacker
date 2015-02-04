@@ -84,4 +84,10 @@ public class PreferenceSwitchView extends PreferenceView {
     public boolean isChecked(){
         return switchView.isCheck();
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        switchView.setEnabled(enabled);
+    }
 }

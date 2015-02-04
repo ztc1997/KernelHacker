@@ -17,7 +17,7 @@ import com.ztc1997.kernelhacker.R;
  * Created by Alex on 2015/2/2.
  */
 public class PreferenceView extends RelativeLayout {
-    protected String key;
+    protected String key, dependency;
     private TextView title, summary;
     protected SharedPreferences preferences;
     private Point downPoint;
@@ -45,6 +45,7 @@ public class PreferenceView extends RelativeLayout {
         if (attrs != null) {
             TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.PreferenceView);
             key = attr.getString(R.styleable.PreferenceView_pv_key);
+            dependency = attr.getString(R.styleable.PreferenceView_pv_dependency);
             setTitle(attr.getString(R.styleable.PreferenceView_pv_title));
             setSummary(attr.getString(R.styleable.PreferenceView_pv_summary));
             attr.recycle();
@@ -79,6 +80,14 @@ public class PreferenceView extends RelativeLayout {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getDependency() {
+        return dependency;
+    }
+
+    public void setDependency(String dependency) {
+        this.dependency = dependency;
     }
 
     @Override
@@ -122,4 +131,28 @@ public class PreferenceView extends RelativeLayout {
         super.onTouchEvent(event);
         return true;
     }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        preferences.registerOnSharedPreferenceChangeListener(changeListener);
+        if (dependency!= null && !dependency.equals(""))
+            setEnabled(preferences.getBoolean(dependency, false));
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
+    SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (dependency!= null && key.equals(dependency)){
+                if (!dependency.equals(""))
+                    setEnabled(preferences.getBoolean(dependency, false));
+            }
+        }
+    };
 }

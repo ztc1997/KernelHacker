@@ -11,6 +11,7 @@
     
     <declare-styleable name="PreferenceView">
         <attr name="pv_key" format="string"/>
+        <attr name="pv_dependency" format="string"/>
         <attr name="pv_title" format="string"/>
         <attr name="pv_summary" format="string"/>
     </declare-styleable>
