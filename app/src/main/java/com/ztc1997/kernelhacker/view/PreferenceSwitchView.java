@@ -62,6 +62,12 @@ public class PreferenceSwitchView extends PreferenceView {
         setChecked(preferences.getBoolean(key, isChecked()));
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
     private SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

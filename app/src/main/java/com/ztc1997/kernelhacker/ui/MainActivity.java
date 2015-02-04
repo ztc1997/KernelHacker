@@ -155,7 +155,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 1:
                     return new CommonFragment();
                 case 2:
-                    return new FeaturesFragment();
+                    return new FeatureFragment();
                 default:
                     return PlaceholderFragment.newInstance(position);
             }
@@ -261,7 +261,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public static void initSysValues(SharedPreferences preferences){
         preferences.edit()
                 .putString(PrefKeys.KERNEL_VERSION, Utils.readOneLine(Paths.INFO_KERNEL_VERSION))
-                .putString(PrefKeys.T2W_INTERAL, Utils.readOneLine(Paths.T2W_INTERVAL))
+                .putInt(PrefKeys.T2W_INTERAL, Utils.tryParseInt(Utils.readOneLine(Paths.T2W_INTERVAL), 20))
                 .putString(PrefKeys.T2W_RANGE_X_FROM, Utils.readOneLine(Paths.T2W_X_FROM))
                 .putString(PrefKeys.T2W_RANGE_X_TO, Utils.readOneLine(Paths.T2W_X_TO))
                 .putString(PrefKeys.T2W_RANGE_Y_FROM, Utils.readOneLine(Paths.T2W_Y_FROM))
@@ -301,8 +301,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
                                 break;
                             case PrefKeys.T2W_INTERAL:
-                                String delay = preferences.getString(key, "20");
-                                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, delay);
+                                int interval = preferences.getInt(key, 20);
+                                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, interval + "");
                                 break;
                             case PrefKeys.ZRAM:
                                 if (preferences.getBoolean(key, false))

@@ -76,7 +76,7 @@ public class BootReceiver extends BroadcastReceiver {
                 }
                 Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
                 Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
-                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getString(PrefKeys.T2W_INTERAL, "20"));
+                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getInt(PrefKeys.T2W_INTERAL, 20) + "");
                 Utils.writeFileWithRoot(Paths.T2W_X_FROM, preferences.getString(PrefKeys.T2W_RANGE_X_FROM, "0"));
                 Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getString(PrefKeys.T2W_RANGE_Y_FROM, "0"));
                 Utils.writeFileWithRoot(Paths.T2W_X_TO, preferences.getString(PrefKeys.T2W_RANGE_X_TO, "719"));

@@ -65,7 +65,12 @@ public class PreferenceView extends RelativeLayout {
     }
 
     public void setSummary(String summary) {
-        this.summary.setText(summary);
+        if (summary == null || summary.equals("")) {
+            this.summary.setVisibility(GONE);
+        }else {
+            this.summary.setText(summary);
+            this.summary.setVisibility(VISIBLE);
+        }
     }
 
     public String getKey() {
@@ -80,7 +85,7 @@ public class PreferenceView extends RelativeLayout {
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         title.setTextColor(getResources().getColor(enabled ? R.color.main_dark : R.color.main_light));
-        summary.setTextColor(getResources().getColor(enabled ? 
+        summary.setTextColor(getResources().getColor(enabled ?
                 R.color.secondary_text_default_material_light : R.color.secondary_text_disabled_material_light));
     }
 
