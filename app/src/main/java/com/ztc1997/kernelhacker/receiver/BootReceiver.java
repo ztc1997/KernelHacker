@@ -29,6 +29,10 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, final Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            if (!preferences.getBoolean(PrefKeys.SET_ON_BOOT, false)){
+                preferences.edit().putBoolean(PrefKeys.BOOTED, true).apply();
+                return;
+            }
             if (preferences.getBoolean(PrefKeys.BOOTED, false)){
                 showNotifition(context, R.string.notifition_boot_no_shutdown_title, R.string.notifition_boot_setting_failed_text);
                 return;

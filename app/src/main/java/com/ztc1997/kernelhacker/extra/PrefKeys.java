@@ -29,4 +29,6 @@ public interface PrefKeys {
     String IO_SCHEDULER = "pref_io_scheduler";
     
     String FAST_CHARGE = "pref_fast_charge";
+    
+    String SET_ON_BOOT = "pref_set_on_boot";
 }
