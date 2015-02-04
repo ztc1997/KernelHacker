@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.gc.materialdesign.views.ButtonFlat;
-
 /**
  * Created by Lewis on 17/08/2014.
  */
@@ -18,7 +16,7 @@ class CustomListAdapter extends ArrayAdapter<String> {
 
     private int mRes;
     private String[] mItems;
-    private ButtonFlat mItemView;
+    private TextView mItemView;
 
     CustomListAdapter(Context _context, int _res, String[] _items){
         super(_context, _res, _items);
@@ -37,7 +35,7 @@ class CustomListAdapter extends ArrayAdapter<String> {
         }
 
         // Reference the text view from layout.
-        mItemView = (ButtonFlat) v.findViewById(R.id.item_dialog_list_item);
+        mItemView = (TextView) v.findViewById(R.id.item_dialog_list_item);
 
         // Apply properties.
         mItemView.setText(mItems[position]);
@@ -46,7 +44,7 @@ class CustomListAdapter extends ArrayAdapter<String> {
         mItemView.setTypeface(CustomListDialog.mTypeface);
 
         try {
-            mItemView.setBackgroundColor(CustomListDialog.mItemColour);
+            mItemView.setTextColor(CustomListDialog.mItemColour);
         } catch(Exception e){}
 
         return v;
