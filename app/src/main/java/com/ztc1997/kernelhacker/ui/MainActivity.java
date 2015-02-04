@@ -276,6 +276,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 .putInt(PrefKeys.ZRAM_SWAPPINESS, Utils.tryParseInt(Utils.readOneLine(Paths.ZRAM_SWAPPINESS), 18))
                 .putString(PrefKeys.IO_SCHEDULER, Utils.getIOScheduler())
                 .putInt(PrefKeys.IO_READ_AHEAD_SIZE, Utils.tryParseInt(Utils.readOneLine(Paths.IO_READ_AHEAD_SIZE), 128))
+                .putBoolean(PrefKeys.FAST_CHARGE, Utils.readOneLine(Paths.FAST_CHARGE).equals("1"))
                 .apply();
     }
 
@@ -296,9 +297,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                     MainActivity.this.stopService(intent);
                                 break;
                             case PrefKeys.T2W:
-                                String i = (preferences.getBoolean(key, false) ? "1" : "0");
-                                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
-                                Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
+                                boolean isT2w = preferences.getBoolean(key, false);
+                                if (!isT2w) preferences.edit().putBoolean(PrefKeys.T2W_AUTO, false).apply();
+                                String t2wString = (isT2w ? "1" : "0");
+                                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, t2wString);
+                                Utils.writeFileWithRoot(Paths.T2W_ENABLE, t2wString);
                                 break;
                             case PrefKeys.T2W_INTERAL:
                                 int interval = preferences.getInt(key, 20);
@@ -349,6 +352,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             case PrefKeys.IO_SCHEDULER:
                                 Utils.writeFileWithRoot(Paths.IO_SCHEDULER, preferences.getString(key, ""));
                                 Utils.writeFileWithRoot(Paths.IO_SCHEDULER_MTD, preferences.getString(key, ""));
+                                break;
+                            case PrefKeys.FAST_CHARGE:
+                                Utils.writeFileWithRoot(Paths.FAST_CHARGE, preferences.getBoolean(key, false) ? "1" : "0");
                                 break;
                         }
                     }

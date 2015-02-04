@@ -8,11 +8,6 @@
     <string name="title_features">Features</string>
     <string name="title_settings">Settings</string>
 
-    <string name="feature_t2w_title">Tap To Wake</string>
-    <string name="feature_t2w_auto_title">Anti False Touch</string>
-    <string name="feature_t2w_interval_title">Interval Time</string>
-    <string name="feature_t2w_effective_range_title">Effective Range</string>
-    <string name="feature_t2w_interval_summury">Interval time between two taps: %1$s ms</string>
     <string name="info_t2w_effective_range">X:%1$s-%2$s Y:%3$s-%4$s</string>
     <string name="dialog_msg_t2w_effective_range">Save effective range?</string>
     <string name="dialog_initialization_title">Initialization</string>
@@ -52,6 +47,12 @@
     <string name="common_pref_io_read_ahead_size_summary">Current size: %1$skb</string>
     <string name="common_io_scheduler_title">IO Scheduler</string>
     <string name="common_io_scheduler_summary">Current IO scheduler: %1$s</string>
+    <string name="feature_t2w_title">Tap To Wake</string>
+    <string name="feature_t2w_auto_title">Anti False Touch</string>
+    <string name="feature_t2w_interval_title">Interval Time</string>
+    <string name="feature_t2w_effective_range_title">Effective Range</string>
+    <string name="feature_t2w_interval_summury">Interval time between two taps: %1$s ms</string>
+    <string name="feature_fast_chgarge_title">Fast Chgarge</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

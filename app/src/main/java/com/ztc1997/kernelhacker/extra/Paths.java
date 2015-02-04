@@ -39,4 +39,6 @@ public interface Paths {
     String IO_READ_AHEAD_SIZE = "/sys/block/mmcblk0/queue/read_ahead_kb";
     String IO_SCHEDULER = "/sys/block/mmcblk0/queue/scheduler";
     String IO_SCHEDULER_MTD = "/sys/block/mtdblock0/queue/scheduler";
+    
+    String FAST_CHARGE = "/sys/kernel/fast_charge/force_fast_charge";
 }

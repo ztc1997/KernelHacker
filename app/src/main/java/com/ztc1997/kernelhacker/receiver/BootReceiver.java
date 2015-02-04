@@ -97,6 +97,7 @@ public class BootReceiver extends BroadcastReceiver {
                 Utils.writeFileWithRoot(Paths.IO_READ_AHEAD_SIZE, preferences.getInt(PrefKeys.IO_READ_AHEAD_SIZE, 128)+"");
                 Utils.writeFileWithRoot(Paths.IO_SCHEDULER, preferences.getString(PrefKeys.IO_SCHEDULER, ""));
                 Utils.writeFileWithRoot(Paths.IO_SCHEDULER_MTD, preferences.getString(PrefKeys.IO_SCHEDULER, ""));
+                Utils.writeFileWithRoot(Paths.FAST_CHARGE, preferences.getBoolean(PrefKeys.FAST_CHARGE, false) ? "1" : "0");
             }
         }.start();
     }
