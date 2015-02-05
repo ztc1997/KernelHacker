@@ -24,7 +24,6 @@ public class PreferenceView extends RelativeLayout {
     private TextView title, summary;
     private MaterialRippleLayout rootView;
     protected SharedPreferences preferences;
-    private Point downPoint;
 
     public PreferenceView(Context context) {
         this(context, null);
@@ -97,6 +96,7 @@ public class PreferenceView extends RelativeLayout {
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+        rootView.setEnabled(enabled);
         title.setTextColor(getResources().getColor(enabled ? R.color.main_dark : R.color.main_light));
         summary.setTextColor(getResources().getColor(enabled ?
                 R.color.secondary_text_default_material_light : R.color.secondary_text_disabled_material_light));
@@ -106,37 +106,6 @@ public class PreferenceView extends RelativeLayout {
     public void setOnClickListener(OnClickListener l) {
         rootView.setOnClickListener(l);
     }
-/*
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (isEnabled())
-            switch (event.getAction()){
-                case MotionEvent.ACTION_DOWN:
-                    getParent().requestDisallowInterceptTouchEvent(true);
-                    downPoint = new Point((int) event.getX(), (int) event.getY());
-                    setBackgroundResource(R.color.dim_lighter_gray);
-                    break;
-                
-                case MotionEvent.ACTION_MOVE:
-                    if (Math.abs(event.getX() - downPoint.x) >= 5 && Math.abs(event.getY() - downPoint.y) >= 5) {
-                        getParent().requestDisallowInterceptTouchEvent(false);
-                        setBackgroundResource(R.color.transparent);
-                    }
-                    break;
-                
-                case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        setBackgroundResource(R.color.transparent);
-                        if (Math.abs(event.getX() - downPoint.x) <= 5 && Math.abs(event.getY() - downPoint.y) <= 5 && onClickListener != null) {
-                            onClickListener.onClick(this);
-                        }
-                        break;
-            }
-        super.onTouchEvent(event);
-        return true;
-    }
-*/
 
     @Override
     protected void onAttachedToWindow() {

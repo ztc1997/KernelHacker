@@ -22,7 +22,7 @@
         android:layout_marginLeft="70dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/negativeBtn"
-        android:src="@drawable/ic_clear_white_48dp"
+        android:src="@mipmap/ic_clear_white_48dp"
         fab:fab_colorNormal="@android:color/holo_red_dark"
         fab:fab_colorPressed="@android:color/holo_red_light"/>
     
@@ -33,7 +33,7 @@
         android:layout_marginRight="70dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/positiveBtn"
-        android:src="@drawable/ic_done_white_48dp"
+        android:src="@mipmap/ic_done_white_48dp"
         fab:fab_colorNormal="@color/main_dark"
         fab:fab_colorPressed="@color/main_light"/>
 

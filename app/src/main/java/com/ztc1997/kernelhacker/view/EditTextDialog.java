@@ -140,8 +140,8 @@ public class EditTextDialog extends AlertDialog{
         });
         subBtn.setRippleSpeed(8f);
         addBtn.setRippleSpeed(8f);
-        buttonAccept.setRippleSpeed(5f);
-        buttonCancel.setRippleSpeed(5f);
+        buttonAccept.setRippleSpeed(20f);
+        buttonCancel.setRippleSpeed(20f);
         
         setValue(value);
 	}

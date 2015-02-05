@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     tools:context="com.ztc1997.kernelhacker.ui.FeatureFragment">
 
-    <ScrollView
+    <com.ztc1997.kernelhacker.view.ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         
@@ -24,6 +24,6 @@
             
         </LinearLayout>
         
-    </ScrollView>
+    </com.ztc1997.kernelhacker.view.ScrollView>
 
 </FrameLayout>
