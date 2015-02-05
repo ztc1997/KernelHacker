@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/misc_about_licenses"
-            app:pv_title="@string/misc_about_licenses_title"/>
+            app:pv_title="@string/notices_title"/>
         
     </LinearLayout>
 
