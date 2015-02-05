@@ -61,5 +61,8 @@
     <string name="misc_about_title">About</string>
     <string name="misc_about_text">This application is written by ztc1997.\nThanks to Takayama Aren &amp; Hello-大白.\nUsed multiple open source project.</string>
     <string name="feature_shake2wake_title">Shake To Wake</string>
+    
+    <string name="dailog_excption_title">Exception Occurs</string>
+    <string name="dailog_excption_msg">Sorry, some exceptions occur cause the application unable to work. You can tap Accept to send the exceptions message to developer to help them fix the exceptions</string>
 
 </resources>

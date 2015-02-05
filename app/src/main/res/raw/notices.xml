@@ -45,4 +45,9 @@
         <copyright>Copyright 2014 Android Alliance Ltd</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
+    <notice>
+        <name>libsuperuser</name>
+        <url>http://su.chainfire.eu/</url>
+        <license>Apache Software License 2.0</license>
+    </notice>
 </notices>
