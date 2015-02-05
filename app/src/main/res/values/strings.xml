@@ -4,7 +4,7 @@
     <string name="restart">Restart</string>
 
     <string name="title_info">Information</string>
-    <string name="title_common">Common</string>
+    <string name="title_common">General</string>
     <string name="title_features">Features</string>
     <string name="title_misc">Misc</string>
 
@@ -27,7 +27,7 @@
     <string name="info_device_state_cpu_temp">Cpu Temp: </string>
     <string name="info_device_state_batery_temp">Batery Temp: </string>
     <string name="common_zram_title">ZRAM</string>
-    <string name="common_zram_summary">Compressed RAM block device</string>
+    <string name="common_zram_summary">Reverse some of you device RAM as compressed swap space</string>
     <string name="common_zram_disksize_title">ZRAM Disk Size</string>
     <string name="common_zram_disksize_summary">Current Disk Size: %1$sMB</string>
     <string name="common_zram_disable_hint">ZRAM may not be disabled right now, it will be disabled on next boot.</string>
