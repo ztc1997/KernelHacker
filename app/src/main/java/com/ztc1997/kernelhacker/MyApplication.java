@@ -15,6 +15,7 @@ public class MyApplication extends Application {
 
     private static RootUtil mRootUtil = new RootUtil();
     private SharedPreferences preferences;
+    private static MyApplication application;
 
     public static RootUtil getRootUtil() {
         if (!mRootUtil.isStarted() && !mRootUtil.startShell())
@@ -25,8 +26,13 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        application = this;
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.getBoolean(PrefKeys.T2W_AUTO, false))
             startService(new Intent(this, AntiFalseWakeService.class));
+    }
+
+    public static MyApplication getInstance() {
+        return application;
     }
 }

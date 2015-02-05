@@ -219,11 +219,39 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             dialog1.show();
                         }
                         initSysValues(preferences);
+                        checkT2wKl();
                         dialog.dismiss();
                     }
                 });
             }
         }.start();
+    }
+    
+    private void checkT2wKl(){
+        if (new File(Paths.T2W_CLEARPAD_KL).exists() 
+                && preferences.getBoolean(PrefKeys.SUPPORT_T2W, false)
+                && !Utils.readTextLines(Paths.T2W_CLEARPAD_KL).contains("POWER")){
+            Dialog dialog = new Dialog(this, getString(R.string.dialog_t2w_lack_file_title), getString(R.string.dialog_t2w_lack_file_msg));
+            dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            File klFile = Utils.writeAssetToCacheFile("clearpad.kl");
+                            MyApplication.getRootUtil().execute("mount -o remount rw /system"
+                                    + "\nrm " + Paths.T2W_CLEARPAD_KL
+                                    + "\ncp " + klFile.getAbsolutePath() + " " + Paths.T2W_CLEARPAD_KL
+                                    + "\nmount -o remount r /system", null);
+                            Utils.setFilePermission(Paths.T2W_CLEARPAD_KL, "075");
+                        }
+                    }.start();
+                }
+            });
+            dialog.addCancelButton(getString(android.R.string.cancel));
+            dialog.show();
+        }
     }
 
     @Override

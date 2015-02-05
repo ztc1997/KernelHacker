@@ -54,6 +54,8 @@
     <string name="feature_t2w_effective_range_title">Effective Range</string>
     <string name="feature_t2w_interval_summury">Interval time between two taps: %1$s ms</string>
     <string name="feature_fast_chgarge_title">Fast Chgarge</string>
+    <string name="dialog_t2w_lack_file_title">Notice!!!</string>
+    <string name="dialog_t2w_lack_file_msg">You device support tap to wake, but lack some system file to enable it, tap Accept to fix the problem.</string>
 
     <string name="misc_set_on_boot_title">Set On Boot</string>
     <string name="misc_about_title">About</string>

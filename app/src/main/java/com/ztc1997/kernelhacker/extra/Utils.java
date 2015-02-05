@@ -1,6 +1,8 @@
 package com.ztc1997.kernelhacker.extra;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.SystemClock;
 import android.provider.SyncStateContract;
 import android.util.Log;
@@ -10,6 +12,7 @@ import com.ztc1997.kernelhacker.MyApplication;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -283,5 +286,42 @@ public class Utils {
         }catch (Exception e){
             return "";
         }
+    }
+
+    public static File writeAssetToFile(String assetName, File targetFile) {
+        return writeAssetToFile(null, assetName, targetFile);
+    }
+
+    public static File writeAssetToFile(AssetManager assets, String assetName, File targetFile) {
+        try {
+            if (assets == null)
+                assets = MyApplication.getInstance().getAssets();
+            InputStream in = assets.open(assetName);
+            FileOutputStream out = new FileOutputStream(targetFile);
+
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = in.read(buffer)) > 0){
+                out.write(buffer, 0, len);
+            }
+            in.close();
+            out.close();
+
+            return targetFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+            if (targetFile != null)
+                targetFile.delete();
+
+            return null;
+        }
+    }
+
+    public static File writeAssetToCacheFile(String name) {
+        return writeAssetToCacheFile(name, name);
+    }
+
+    public static File writeAssetToCacheFile(String assetName, String fileName) {
+        return writeAssetToFile(assetName, new File(MyApplication.getInstance().getCacheDir(), fileName));
     }
 }

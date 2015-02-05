@@ -15,6 +15,7 @@ public interface Paths {
     String T2W_Y_FROM = TOUCHSCREEN_SYS_DIR + "tap2wake_y_from";
     String T2W_X_TO = TOUCHSCREEN_SYS_DIR + "tap2wake_x_to";
     String T2W_Y_TO = TOUCHSCREEN_SYS_DIR + "tap2wake_y_to";
+    String T2W_CLEARPAD_KL = "/system/usr/keylayout/clearpad.kl";
     
     String SHAKE2WAKE = "/sys/class/input/input6/slope_mode";
 
