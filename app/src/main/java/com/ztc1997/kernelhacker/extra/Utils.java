@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,39 @@ public class Utils {
     
     public static boolean writeFileWithRoot(String path, String value){
         return MyApplication.getRootUtil().execute("echo " + value + " > " + path, null) == 0;
+    }
+    
+    public static String getFilePermission(String path){
+        try {
+            List<String> list = new LinkedList<>();
+            MyApplication.getRootUtil().execute("ls -ld " + path + " |awk '{print $1}'|sed 's/^[a-zA-Z-]//'", list);
+            String s1 = permissionStringToInt(list.get(0).substring(0, 2)) + "";
+            String s2 = permissionStringToInt(list.get(0).substring(3, 5)) + "";
+            String s3 = permissionStringToInt(list.get(0).substring(6, 8)) + "";
+            return s1 + s2 + s3;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "-1";
+    }
+    
+    public static int tryParseInt(String s, int defaultValue){
+        try {
+            return Integer.parseInt(s);
+        }catch (NumberFormatException e){
+            return defaultValue;
+        }
+    }
+    
+    private static int permissionStringToInt(String permission){
+        int rc = 0;
+        if (permission.contains("x"))
+            rc += 1;
+        if (permission.contains("w"))
+            rc += 2;
+        if (permission.contains("r"))
+            rc += 4;
+        return rc;
     }
     
     public static void setFilePermission(String path, String permission){
@@ -152,23 +186,7 @@ public class Utils {
 
     }
 
-    public static void initSysValues(SharedPreferences preferences){
-        preferences.edit()
-                .putString(PrefKeys.KERNEL_VERSION, readOneLine(Paths.INFO_KERNEL_VERSION))
-                .putString(PrefKeys.T2W_INTERAL, readOneLine(Paths.T2W_INTERVAL))
-                .putString(PrefKeys.T2W_RANGE_X_FROM, readOneLine(Paths.T2W_X_FROM))
-                .putString(PrefKeys.T2W_RANGE_X_TO, readOneLine(Paths.T2W_X_TO))
-                .putString(PrefKeys.T2W_RANGE_Y_FROM, readOneLine(Paths.T2W_Y_FROM))
-                .putString(PrefKeys.T2W_RANGE_Y_TO,readOneLine(Paths.T2W_Y_TO))
-                .putBoolean(PrefKeys.T2W, !readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
-                .putString(PrefKeys.CPU_MAX_FREQ, readOneLine(Paths.CPUINFO_MAX_FREQ))
-                .putString(PrefKeys.CPU_MIN_FREQ, readOneLine(Paths.CPUINFO_MIN_FREQ))
-                .putBoolean(PrefKeys.ZRAM, readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
-				.putString(PrefKeys.ZRAM_DISKSIZE, readTextLines(Paths.ZRAM_DISKSIZE))
-                .apply();
-    }
-
-    private static String[] readStringArray(String filename) {
+    public static String[] readStringArray(String filename) {
         String line = readOneLine(filename);
         if (line != null) {
             return line.split(" ");
@@ -213,6 +231,57 @@ public class Utils {
     }
     
     public static String khzToMhzString(String khz){
-        return khz.substring(0, khz.length() - 3);
+        if (khz.endsWith("000"))
+            return khz.substring(0, khz.length() - 3);
+        else 
+            return khz;
+    }
+
+    public static String getIOScheduler() {
+        String scheduler = null;
+        String file = Paths.IO_SCHEDULER;
+        if (!(new File(file)).exists()) {
+            file = Paths.IO_SCHEDULER_MTD;
+        }
+        String[] schedulers = readStringArray(file);
+        if (schedulers != null) {
+            for (String s : schedulers) {
+                if (s.charAt(0) == '[') {
+                    scheduler = s.substring(1, s.length() - 1);
+                    break;
+                }
+            }
+        }
+        return scheduler;
+    }
+
+    public static String[] getAvailableIOSchedulers() {
+        String[] schedulers = null;
+        String file = Paths.IO_SCHEDULER;
+        if (!(new File(file)).exists()) {
+            file = Paths.IO_SCHEDULER;
+        }
+        String[] aux = readStringArray(file);
+        if (aux != null) {
+            schedulers = new String[aux.length];
+            for (int i = 0; i < aux.length; i++) {
+                if (aux[i].charAt(0) == '[') {
+                    schedulers[i] = aux[i].substring(1, aux[i].length() - 1);
+                } else {
+                    schedulers[i] = aux[i];
+                }
+            }
+        }
+        return schedulers;
+    }
+    
+    public static String readOneLineWithRoot(String path){
+        try {
+            List<String> list = new LinkedList<>();
+            MyApplication.getRootUtil().execute("cat " + path, list);
+            return list.get(0);
+        }catch (Exception e){
+            return "";
+        }
     }
 }

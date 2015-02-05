@@ -135,7 +135,7 @@ public class InfoFragment extends Fragment {
             while (true){
                 final int cpuTmp = Integer.parseInt(Utils.readOneLine(Paths.INFO_CPU_TEMP));
                 String cpufrqStr = Utils.readOneLine(Paths.SCALING_CUR_FREQ);
-                final int cpufrq = Integer.parseInt(cpufrqStr.substring(0, cpufrqStr.length() - 3));
+                final int cpufrq = Integer.parseInt(Utils.khzToMhzString(cpufrqStr));
                 handler.post(new Runnable() {
                     @Override
                     public void run() {

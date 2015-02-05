@@ -29,6 +29,7 @@ public abstract class Button extends CustomView {
 	Integer rippleColor;
 	OnClickListener onClickListener;
 	boolean clickAfterRipple = true;
+    boolean ripplePlaying;
 	int backgroundColor = Color.parseColor("#1E88E5");
 
 	public Button(Context context, AttributeSet attrs) {
@@ -82,9 +83,11 @@ public abstract class Button extends CustomView {
 				if ((event.getX() <= getWidth() && event.getX() >= 0)
 						&& (event.getY() <= getHeight() && event.getY() >= 0)) {
 					radius++;
-					if(!clickAfterRipple && onClickListener != null){
+					if((!clickAfterRipple || ripplePlaying) && onClickListener != null){
 						onClickListener.onClick(this);
 					}
+                    else
+                        ripplePlaying = true;
 				} else {
 					isLastTouch = false;
 					x = -1;
@@ -132,6 +135,7 @@ public abstract class Button extends CustomView {
 			radius = getHeight() / rippleSize;
 			if (onClickListener != null&& clickAfterRipple)
 				onClickListener.onClick(this);
+            ripplePlaying = false;
 		}
 		return output;
 	}
@@ -181,4 +185,12 @@ public abstract class Button extends CustomView {
 	public float getRippleSpeed() {
 		return this.rippleSpeed;
 	}
+
+    public boolean isClickAfterRipple() {
+        return clickAfterRipple;
+    }
+
+    public void setClickAfterRipple(boolean clickAfterRipple) {
+        this.clickAfterRipple = clickAfterRipple;
+    }
 }

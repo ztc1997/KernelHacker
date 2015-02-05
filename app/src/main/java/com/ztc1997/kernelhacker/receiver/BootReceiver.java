@@ -29,6 +29,10 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, final Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+            if (!preferences.getBoolean(PrefKeys.SET_ON_BOOT, false)){
+                preferences.edit().putBoolean(PrefKeys.BOOTED, true).apply();
+                return;
+            }
             if (preferences.getBoolean(PrefKeys.BOOTED, false)){
                 showNotifition(context, R.string.notifition_boot_no_shutdown_title, R.string.notifition_boot_setting_failed_text);
                 return;
@@ -36,7 +40,6 @@ public class BootReceiver extends BroadcastReceiver {
             preferences.edit().putBoolean(PrefKeys.BOOTED, true).apply();
             if (!preferences.getString(PrefKeys.KERNEL_VERSION, "").equals(Utils.readOneLine(Paths.INFO_KERNEL_VERSION))){
                 showNotifition(context, R.string.notifition_boot_kernel_changed_title, R.string.notifition_boot_setting_failed_text);
-                Utils.initSysValues(preferences);
                 return;
             }
             bootSetup(context, preferences);
@@ -77,7 +80,7 @@ public class BootReceiver extends BroadcastReceiver {
                 }
                 Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
                 Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
-                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getString(PrefKeys.T2W_INTERAL, "20"));
+                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getInt(PrefKeys.T2W_INTERAL, 20) + "");
                 Utils.writeFileWithRoot(Paths.T2W_X_FROM, preferences.getString(PrefKeys.T2W_RANGE_X_FROM, "0"));
                 Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getString(PrefKeys.T2W_RANGE_Y_FROM, "0"));
                 Utils.writeFileWithRoot(Paths.T2W_X_TO, preferences.getString(PrefKeys.T2W_RANGE_X_TO, "719"));
@@ -86,8 +89,20 @@ public class BootReceiver extends BroadcastReceiver {
                 Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "644");
                 Utils.writeFileWithRoot(Paths.SCALING_MIN_FREQ, preferences.getString(PrefKeys.CPU_MIN_FREQ, "-1"));
                 Utils.writeFileWithRoot(Paths.SCALING_MAX_FREQ, preferences.getString(PrefKeys.CPU_MAX_FREQ, "-1"));
+                if (preferences.getBoolean(PrefKeys.CPU_LOCK_FREQ, false)){
+                    Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "444");
+                    Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "444");
+                }
+                Utils.writeFileWithRoot(Paths.SCALING_GOVERNOR, preferences.getString(PrefKeys.CPU_GOV, "-1"));
+                Utils.writeFileWithRoot(Paths.ZRAM_DISKSIZE, (preferences.getInt(PrefKeys.ZRAM_DISKSIZE, 0) << 20) + "");
+                Utils.writeFileWithRoot(Paths.ZRAM_SWAPPINESS, preferences.getInt(PrefKeys.ZRAM_SWAPPINESS, 18) + "");
                 MyApplication.getRootUtil().execute(preferences.getBoolean(PrefKeys.ZRAM, false) ?
                         Commands.ENABLE_ZRAM : Commands.DISABLE_ZRAM, null);
+                Utils.writeFileWithRoot(Paths.IO_READ_AHEAD_SIZE, preferences.getInt(PrefKeys.IO_READ_AHEAD_SIZE, 128)+"");
+                Utils.writeFileWithRoot(Paths.IO_SCHEDULER, preferences.getString(PrefKeys.IO_SCHEDULER, ""));
+                Utils.writeFileWithRoot(Paths.IO_SCHEDULER_MTD, preferences.getString(PrefKeys.IO_SCHEDULER, ""));
+                Utils.writeFileWithRoot(Paths.FAST_CHARGE, preferences.getBoolean(PrefKeys.FAST_CHARGE, false) ? "1" : "0");
+                Utils.writeFileWithRoot(Paths.SHAKE2WAKE, preferences.getBoolean(PrefKeys.SHAKE2WAKE, false) ? "1" : "0");
             }
         }.start();
     }

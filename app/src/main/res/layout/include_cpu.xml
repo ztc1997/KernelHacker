@@ -20,13 +20,37 @@
             android:id="@+id/common_cpu_min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:pv_title="@string/common_cpu_min_title"/>
+            app:pv_title="@string/common_cpu_min_title"
+            app:pv_summary="@string/common_cpu_min_summary"
+            app:pv_key="pref_cpu_min_freq"
+            app:pv_dependency="support_cpu"/>
 
         <com.ztc1997.kernelhacker.view.PreferenceListView
             android:id="@+id/common_cpu_max"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:pv_title="@string/common_cpu_max_title"/>
+            app:pv_title="@string/common_cpu_max_title"
+            app:pv_summary="@string/common_cpu_max_summary"
+            app:pv_key="pref_cpu_max_freq"
+            app:pv_dependency="support_cpu"/>
+
+        <com.ztc1997.kernelhacker.view.PreferenceListView
+            android:id="@+id/common_cpu_gov"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pv_title="@string/common_cpu_gov_title"
+            app:pv_summary="@string/common_cpu_gov_summary"
+            app:pv_key="pref_cpu_gov"
+            app:pv_dependency="support_cpu"/>
+        
+        <com.ztc1997.kernelhacker.view.PreferenceSwitchView
+            android:id="@+id/common_cpu_lock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pv_title="@string/common_cpu_lock_title"
+            app:pv_summary="@string/common_cpu_lock_summary"
+            app:pv_key="pref_cpu_lock_freq"
+            app:pv_dependency="support_cpu"/>
 
     </LinearLayout>
 

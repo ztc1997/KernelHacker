@@ -49,15 +49,46 @@ public class PreferenceSwitchView extends PreferenceView {
         switchView.setOncheckListener(new Switch.OnCheckListener() {
             @Override
             public void onCheck(boolean check) {
-                preferences.edit().putBoolean(key, check).apply();
+                if (key != null)
+                    preferences.edit().putBoolean(key, check).apply();
             }
         });
     }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        preferences.registerOnSharedPreferenceChangeListener(changeListener);
+        setChecked(preferences.getBoolean(key, isChecked()));
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(PreferenceSwitchView.this.key)){
+                setChecked(preferences.getBoolean(key, isChecked()));
+            }
+        }
+    };
+    
     public void setChecked(boolean checked){
         switchView.setChecked(checked);
     }
     
     public boolean isChecked(){
         return switchView.isCheck();
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        switchView.setEnabled(enabled);
+        switchView.setAlpha(enabled ? 1f : 0.5f);
     }
 }

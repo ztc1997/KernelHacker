@@ -1,5 +1,6 @@
 package com.ztc1997.kernelhacker.ui;
 
+import java.io.File;
 import java.util.Locale;
 
 import android.app.Fragment;
@@ -98,29 +99,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_info, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
@@ -155,7 +133,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 1:
                     return new CommonFragment();
                 case 2:
-                    return new FeaturesFragment();
+                    return new FeatureFragment();
+                case 3:
+                    return new MiscFragment();
                 default:
                     return PlaceholderFragment.newInstance(position);
             }
@@ -178,7 +158,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 2:
                     return getString(R.string.title_features).toUpperCase(l);
                 case 3:
-                    return getString(R.string.title_settings).toUpperCase(l);
+                    return getString(R.string.title_misc).toUpperCase(l);
             }
             return null;
         }
@@ -218,7 +198,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     private void getRoot(){
-        final ProgressDialog dialog = new ProgressDialog(this,getString(R.string.dialog_getting_root_title));
+        final ProgressDialog dialog = new ProgressDialog(this,getString(R.string.dialog_initialization_title));
         dialog.setCancelable(false);
         dialog.show();
         new Thread(){
@@ -238,6 +218,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             });
                             dialog1.show();
                         }
+                        initSysValues(preferences);
                         dialog.dismiss();
                     }
                 });
@@ -249,13 +230,41 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onResume() {
         super.onResume();
         preferences.registerOnSharedPreferenceChangeListener(changeListener);
-        Utils.initSysValues(preferences);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
+    public static void initSysValues(SharedPreferences preferences){
+        preferences.edit()
+                .putBoolean(PrefKeys.SUPPORT_SHAKE2WAKE, new File(Paths.SHAKE2WAKE).exists())
+                .putBoolean(PrefKeys.SUPPORT_T2W, new File(Paths.T2W_PREVENT_SLEEP).exists())
+                .putBoolean(PrefKeys.SUPPORT_CPU, new File(Paths.SCALING_AVAILABLE_FREQ).exists())
+                .putBoolean(PrefKeys.SUPPORT_ZRAM, new File(Paths.ZRAM_SYS_DIR).exists())
+                .putBoolean(PrefKeys.SUPPORT_IO, new File(Paths.IO_READ_AHEAD_SIZE).exists())
+                .putBoolean(PrefKeys.SUPPORT_FASTCHR, new File(Paths.FAST_CHARGE).exists())
+                .putString(PrefKeys.KERNEL_VERSION, Utils.readOneLine(Paths.INFO_KERNEL_VERSION))
+                .putInt(PrefKeys.T2W_INTERAL, Utils.tryParseInt(Utils.readOneLine(Paths.T2W_INTERVAL), 20))
+                .putString(PrefKeys.T2W_RANGE_X_FROM, Utils.readOneLine(Paths.T2W_X_FROM))
+                .putString(PrefKeys.T2W_RANGE_X_TO, Utils.readOneLine(Paths.T2W_X_TO))
+                .putString(PrefKeys.T2W_RANGE_Y_FROM, Utils.readOneLine(Paths.T2W_Y_FROM))
+                .putString(PrefKeys.T2W_RANGE_Y_TO, Utils.readOneLine(Paths.T2W_Y_TO))
+                .putBoolean(PrefKeys.T2W, !Utils.readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
+                .putString(PrefKeys.CPU_MAX_FREQ, Utils.readOneLine(Paths.CPUINFO_MAX_FREQ))
+                .putString(PrefKeys.CPU_MIN_FREQ, Utils.readOneLine(Paths.CPUINFO_MIN_FREQ))
+                .putBoolean(PrefKeys.ZRAM, Utils.readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
+                .putBoolean(PrefKeys.CPU_LOCK_FREQ, Utils.getFilePermission(Paths.SCALING_MAX_FREQ).equals("444"))
+                .putString(PrefKeys.CPU_GOV, Utils.readOneLine(Paths.SCALING_GOVERNOR))
+                .putInt(PrefKeys.ZRAM_DISKSIZE, Utils.tryParseInt(Utils.readOneLine(Paths.ZRAM_DISKSIZE), -1) >>> 20)
+                .putInt(PrefKeys.ZRAM_SWAPPINESS, Utils.tryParseInt(Utils.readOneLine(Paths.ZRAM_SWAPPINESS), 18))
+                .putString(PrefKeys.IO_SCHEDULER, Utils.getIOScheduler())
+                .putInt(PrefKeys.IO_READ_AHEAD_SIZE, Utils.tryParseInt(Utils.readOneLine(Paths.IO_READ_AHEAD_SIZE), 128))
+                .putBoolean(PrefKeys.FAST_CHARGE, Utils.readOneLine(Paths.FAST_CHARGE).equals("1"))
+                .putBoolean(PrefKeys.SHAKE2WAKE, Utils.readOneLineWithRoot(Paths.SHAKE2WAKE).contains("1"))
+                .apply();
     }
 
     private final SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -275,13 +284,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                     MainActivity.this.stopService(intent);
                                 break;
                             case PrefKeys.T2W:
-                                String i = (preferences.getBoolean(key, false) ? "1" : "0");
-                                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
-                                Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
+                                boolean isT2w = preferences.getBoolean(key, false);
+                                if (!isT2w) preferences.edit().putBoolean(PrefKeys.T2W_AUTO, false).apply();
+                                String t2wString = (isT2w ? "1" : "0");
+                                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, t2wString);
+                                Utils.writeFileWithRoot(Paths.T2W_ENABLE, t2wString);
                                 break;
                             case PrefKeys.T2W_INTERAL:
-                                String delay = preferences.getString(key, "20");
-                                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, delay);
+                                int interval = preferences.getInt(key, 20);
+                                Utils.writeFileWithRoot(Paths.T2W_INTERVAL, interval + "");
                                 break;
                             case PrefKeys.ZRAM:
                                 if (preferences.getBoolean(key, false))
@@ -299,10 +310,41 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             case PrefKeys.CPU_MIN_FREQ:
                                 Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "644");
                                 Utils.writeFileWithRoot(Paths.SCALING_MIN_FREQ, preferences.getString(key, "-1"));
+                                if (preferences.getBoolean(PrefKeys.CPU_LOCK_FREQ, false))
+                                    Utils.setFilePermission(Paths.SCALING_MIN_FREQ, "444");
                                 break;
                             case PrefKeys.CPU_MAX_FREQ:
                                 Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "644");
                                 Utils.writeFileWithRoot(Paths.SCALING_MAX_FREQ, preferences.getString(key, "-1"));
+                                if (preferences.getBoolean(PrefKeys.CPU_LOCK_FREQ, false))
+                                    Utils.setFilePermission(Paths.SCALING_MAX_FREQ, "444");
+                                break;
+                            case PrefKeys.CPU_LOCK_FREQ:
+                                boolean lookFreq = preferences.getBoolean(key, false);
+                                Utils.setFilePermission(Paths.SCALING_MAX_FREQ, lookFreq ? "444" : "644");
+                                Utils.setFilePermission(Paths.SCALING_MIN_FREQ, lookFreq ? "444" : "644");
+                                break;
+                            case PrefKeys.CPU_GOV:
+                                Utils.writeFileWithRoot(Paths.SCALING_GOVERNOR, preferences.getString(PrefKeys.CPU_GOV, "-1"));
+                                break;
+                            case PrefKeys.ZRAM_DISKSIZE:
+                                Utils.writeFileWithRoot(Paths.ZRAM_DISKSIZE, (preferences.getInt(key, 0) << 20) + "");
+                                break;
+                            case PrefKeys.ZRAM_SWAPPINESS:
+                                Utils.writeFileWithRoot(Paths.ZRAM_SWAPPINESS, preferences.getInt(key, 18) + "");
+                                break;
+                            case PrefKeys.IO_READ_AHEAD_SIZE:
+                                Utils.writeFileWithRoot(Paths.IO_READ_AHEAD_SIZE, preferences.getInt(key, 128)+"");
+                                break;
+                            case PrefKeys.IO_SCHEDULER:
+                                Utils.writeFileWithRoot(Paths.IO_SCHEDULER, preferences.getString(key, ""));
+                                Utils.writeFileWithRoot(Paths.IO_SCHEDULER_MTD, preferences.getString(key, ""));
+                                break;
+                            case PrefKeys.FAST_CHARGE:
+                                Utils.writeFileWithRoot(Paths.FAST_CHARGE, preferences.getBoolean(key, false) ? "1" : "0");
+                                break;
+                            case PrefKeys.SHAKE2WAKE:
+                                Utils.writeFileWithRoot(Paths.SHAKE2WAKE, preferences.getBoolean(key, false) ? "1" : "0");
                                 break;
                         }
                     }

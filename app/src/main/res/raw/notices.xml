@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<notices>
+    <notice>
+        <name>no-frills-cpu-classic</name>
+        <url>https://github.com/hrk/no-frills-cpu-classic</url>
+        <copyright>Copyright 2011 Luca Santarelli</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Nine Old Androids</name>
+        <url>http://nineoldandroids.com/</url>
+        <copyright>Copyright (C) 2010 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>MPAndroidChart</name>
+        <url>http://android-arsenal.com/details/1/741</url>
+        <copyright>Copyright 2014 Philipp Jahoda</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Material Design Android Library</name>
+        <url>https://android-arsenal.com/details/1/1156</url>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>L-Dialogs</name>
+        <url>https://github.com/lewisjdeane/L-Dialogs</url>
+    </notice>
+    <notice>
+        <name>FloatingActionButton</name>
+        <url>http://android-arsenal.com/details/1/824</url>
+        <copyright>Copyright (c) 2014 Oleksandr Melnykov</copyright>
+        <license>MIT License</license>
+    </notice>
+    <notice>
+        <name>material-ripple</name>
+        <url>https://github.com/balysv/material-ripple</url>
+        <copyright>Copyright 2015 Balys Valentukevicius</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>EdgeEffectOverride</name>
+        <url>https://github.com/AndroidAlliance/EdgeEffectOverride</url>
+        <copyright>Copyright 2014 Android Alliance Ltd</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+</notices>

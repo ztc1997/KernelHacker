@@ -44,7 +44,16 @@ public class PreferenceListView extends PreferenceView {
     
     private void showDialog(){
         CustomListDialog dialog = new CustomListDialog.Builder(getContext(), getTitle(), options).build();
-        dialog.setListClickListener(listClickListener);
+        dialog.setListClickListener(new CustomListDialog.ListClickListener(){
+            @Override
+            public void onListItemSelected(int position, String[] items, String item) {
+                if (key != null)
+                    preferences.edit().putString(key, item).apply();
+                if (listClickListener != null)
+                    listClickListener.onListItemSelected(position, items, item);
+            }
+            
+        });
         dialog.show();
     }
 

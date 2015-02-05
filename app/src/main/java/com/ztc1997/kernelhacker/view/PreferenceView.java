@@ -8,20 +8,23 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.ztc1997.kernelhacker.R;
 
 /**
  * Created by Alex on 2015/2/2.
  */
 public class PreferenceView extends RelativeLayout {
-    protected String key;
+    protected String key, dependency;
     private TextView title, summary;
+    private MaterialRippleLayout rootView;
     protected SharedPreferences preferences;
     private Point downPoint;
-    private OnClickListener onClickListener;
 
     public PreferenceView(Context context) {
         this(context, null);
@@ -41,10 +44,12 @@ public class PreferenceView extends RelativeLayout {
         LayoutInflater.from(context).inflate(layoutRes, this);
         title = (TextView) findViewById(R.id.preferencr_title);
         summary = (TextView) findViewById(R.id.preferencr_summary);
+        rootView = (MaterialRippleLayout) findViewById(R.id.preferencr_ripple);
 
         if (attrs != null) {
             TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.PreferenceView);
             key = attr.getString(R.styleable.PreferenceView_pv_key);
+            dependency = attr.getString(R.styleable.PreferenceView_pv_dependency);
             setTitle(attr.getString(R.styleable.PreferenceView_pv_title));
             setSummary(attr.getString(R.styleable.PreferenceView_pv_summary));
             attr.recycle();
@@ -65,7 +70,12 @@ public class PreferenceView extends RelativeLayout {
     }
 
     public void setSummary(String summary) {
-        this.summary.setText(summary);
+        if (summary == null || summary.equals("")) {
+            this.summary.setVisibility(GONE);
+        }else {
+            this.summary.setText(summary);
+            this.summary.setVisibility(VISIBLE);
+        }
     }
 
     public String getKey() {
@@ -76,16 +86,27 @@ public class PreferenceView extends RelativeLayout {
         this.key = key;
     }
 
+    public String getDependency() {
+        return dependency;
+    }
+
+    public void setDependency(String dependency) {
+        this.dependency = dependency;
+    }
+
     @Override
     public void setEnabled(boolean enabled) {
-        title.setTextColor(getResources().getColor(enabled ? R.color.main_dark : R.color.main_light));
         super.setEnabled(enabled);
+        title.setTextColor(getResources().getColor(enabled ? R.color.main_dark : R.color.main_light));
+        summary.setTextColor(getResources().getColor(enabled ?
+                R.color.secondary_text_default_material_light : R.color.secondary_text_disabled_material_light));
     }
 
     @Override
     public void setOnClickListener(OnClickListener l) {
-        onClickListener = l;
+        rootView.setOnClickListener(l);
     }
+/*
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -94,24 +115,18 @@ public class PreferenceView extends RelativeLayout {
                 case MotionEvent.ACTION_DOWN:
                     getParent().requestDisallowInterceptTouchEvent(true);
                     downPoint = new Point((int) event.getX(), (int) event.getY());
-                    title.setTextColor(getResources().getColor(R.color.main_light));
-                    summary.setTextColor(getResources().getColor(R.color.secondary_text_disabled_material_light));
                     setBackgroundResource(R.color.dim_lighter_gray);
                     break;
                 
                 case MotionEvent.ACTION_MOVE:
                     if (Math.abs(event.getX() - downPoint.x) >= 5 && Math.abs(event.getY() - downPoint.y) >= 5) {
                         getParent().requestDisallowInterceptTouchEvent(false);
-                        title.setTextColor(getResources().getColor(R.color.main_dark));
-                        summary.setTextColor(getResources().getColor(R.color.secondary_text_default_material_light));
                         setBackgroundResource(R.color.transparent);
                     }
                     break;
                 
                 case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
-                        title.setTextColor(getResources().getColor(R.color.main_dark));
-                        summary.setTextColor(getResources().getColor(R.color.secondary_text_default_material_light));
                         setBackgroundResource(R.color.transparent);
                         if (Math.abs(event.getX() - downPoint.x) <= 5 && Math.abs(event.getY() - downPoint.y) <= 5 && onClickListener != null) {
                             onClickListener.onClick(this);
@@ -121,4 +136,29 @@ public class PreferenceView extends RelativeLayout {
         super.onTouchEvent(event);
         return true;
     }
+*/
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        preferences.registerOnSharedPreferenceChangeListener(changeListener);
+        if (dependency!= null && !dependency.equals(""))
+            setEnabled(preferences.getBoolean(dependency, false));
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        preferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
+    SharedPreferences.OnSharedPreferenceChangeListener changeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (dependency!= null && key.equals(dependency)){
+                if (!dependency.equals(""))
+                    setEnabled(preferences.getBoolean(dependency, false));
+            }
+        }
+    };
 }

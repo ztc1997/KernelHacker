@@ -21,7 +21,7 @@ import android.widget.RelativeLayout;
 
 public class Switch extends CustomView {
 
-	int backgroundColor = Color.parseColor("#4CAF50");
+	int backgroundColor = 0xFF4CAF50;//Color.parseColor("#4CAF50");
     
     float downX;
     boolean isMoved;
@@ -167,9 +167,9 @@ public class Switch extends CustomView {
 	 * @return
 	 */
 	protected int makePressColor() {
-		int r = (this.backgroundColor >> 16) & 0xFF;
-		int g = (this.backgroundColor >> 8) & 0xFF;
-		int b = (this.backgroundColor >> 0) & 0xFF;
+		int r = (this.backgroundColor >>> 16) & 0xFF;
+		int g = (this.backgroundColor >>> 8) & 0xFF;
+		int b = (this.backgroundColor) & 0xFF;
 		r = (r - 30 < 0) ? 0 : r - 30;
 		g = (g - 30 < 0) ? 0 : g - 30;
 		b = (b - 30 < 0) ? 0 : b - 30;
@@ -201,6 +201,8 @@ public class Switch extends CustomView {
 	public void setChecked(boolean check) {
 		invalidate();
 		this.check = check;
+        if (onCheckListener != null)
+            onCheckListener.onCheck(check);
 		ball.animateCheck();
 	}
 
