@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">Kernel Hacker</string>
+
+    <string name="restart">Restart</string>
+
+    <string name="title_info">基本信息</string>
+    <string name="title_common">通用设置</string>
+    <string name="title_features">特性</string>
+    <string name="title_misc">杂项</string>
+
+    <string name="info_t2w_effective_range">X:%1$s-%2$s Y:%3$s-%4$s</string>
+    <string name="dialog_msg_t2w_effective_range">保持有效范围？</string>
+    <string name="dialog_initialization_title">初始化</string>
+    <string name="dialog_getting_root_failed_title">应用程序不能使用</string>
+    <string name="dialog_getting_root_failed_msg">无法获取超级用户权限</string>
+    <string name="notifition_boot_no_shutdown_title">异常关闭，无法应用设置</string>
+    <string name="notifition_boot_kernel_changed_title">内核版本发生变化，无法应用设置</string>
+    <string name="notifition_boot_setting_failed_title">启动时设置失败</string>
+    <string name="notifition_boot_setting_failed_text">点击打开应用程序</string>
+    <string name="re_boot_set_title">使用初始设置？</string>
+    <string name="re_boot_set_content">可能导致不稳定。</string>
+    <string name="info_cpu_time_in_state">CPU 时间状态</string>
+    <string name="info_kernel_version">内核版本</string>
+    <string name="info_kernel_version_unable">无法获取内核版本信息</string>
+    <string name="info_device_state">设备状态</string>
+    <string name="info_device_state_cpu_freq">CPU 频率： </string>
+    <string name="info_device_state_cpu_temp">CPU 温度：</string>
+    <string name="info_device_state_batery_temp">电池温度：</string>
+    <string name="common_zram_title">ZRAM</string>
+    <string name="common_zram_summary">Compressed RAM block device</string>
+    <string name="common_zram_disksize_title">ZRAM 分区大小</string>
+    <string name="common_zram_disksize_summary">当前分区大小：%1$sMB</string>
+    <string name="common_zram_disable_hint">ZRAM 的禁用可能还不能立即生效，它会在下次启动时生效。</string>
+    <string name="common_cpu_title">CPU</string>
+    <string name="common_cpu_min_title">CPU 最低频率</string>
+    <string name="common_cpu_min_summary">当前最低频率：%1$sMHz</string>
+    <string name="common_cpu_max_title">CPU 最高频率</string>
+    <string name="common_cpu_max_summary">当前最高频率： %1$sMHz</string>
+    <string name="common_cpu_gov_title">CPU 调节器</string>
+    <string name="common_cpu_gov_summary">当前调节器：%1$s</string>
+    <string name="common_cpu_lock_title">锁定频率</string>
+    <string name="common_cpu_lock_summary">防止频率被其他程序修改。</string>
+    <string name="common_zram_swappiness_title">Swappiness</string>
+    <string name="common_zram_swappiness_summary">The positive degree of using swap &amp; zram blocks. Current: %1$s</string>
+    <string name="common_io_title">IO</string>
+    <string name="common_pref_io_read_ahead_size_title">缓冲区大小</string>
+    <string name="common_pref_io_read_ahead_size_summary">当前大小：%1$skb</string>
+    <string name="common_io_scheduler_title">IO 调节器</string>
+    <string name="common_io_scheduler_summary">当前 IO 调节器：%1$s</string>
+    <string name="feature_t2w_title">双击唤醒</string>
+    <string name="feature_t2w_auto_title">防误触</string>
+    <string name="feature_t2w_auto_summury">Turn off tap to wake when proximity sensor activated</string>
+    <string name="feature_t2w_interval_title">间隔时间</string>
+    <string name="feature_t2w_effective_range_title">有效范围</string>
+    <string name="feature_t2w_interval_summury">在间隔时间内双击：%1$s ms</string>
+    <string name="feature_fast_chgarge_title">快速充电</string>
+
+    <string name="misc_set_on_boot_title">开机时应用设置</string>
+    <string name="misc_about_title">关于</string>
+    <string name="misc_about_text">This application is written by ztc1997.\nThanks to Takayama Aren &amp; Hello-大白.\nUsed multiple open source project.</string>
+    <string name="feature_shake2wake_title">摇晃唤醒</string>
+
+</resources>
