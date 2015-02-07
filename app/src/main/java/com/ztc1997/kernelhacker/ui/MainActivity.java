@@ -275,12 +275,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 .putBoolean(PrefKeys.SUPPORT_IO, new File(Paths.IO_READ_AHEAD_SIZE).exists())
                 .putBoolean(PrefKeys.SUPPORT_FASTCHR, new File(Paths.FAST_CHARGE).exists())
                 .putString(PrefKeys.KERNEL_VERSION, Utils.readOneLine(Paths.INFO_KERNEL_VERSION))
+                .putBoolean(PrefKeys.T2W_S2W, Utils.readOneLine(Paths.T2W_S2W_ENABLE).equals("1"))
+                .putBoolean(PrefKeys.T2W, Utils.readOneLine(Paths.T2W_ENABLE).equals("1"))
                 .putInt(PrefKeys.T2W_INTERAL, Utils.tryParseInt(Utils.readOneLine(Paths.T2W_INTERVAL), 20))
                 .putString(PrefKeys.T2W_RANGE_X_FROM, Utils.readOneLine(Paths.T2W_X_FROM))
                 .putString(PrefKeys.T2W_RANGE_X_TO, Utils.readOneLine(Paths.T2W_X_TO))
                 .putString(PrefKeys.T2W_RANGE_Y_FROM, Utils.readOneLine(Paths.T2W_Y_FROM))
                 .putString(PrefKeys.T2W_RANGE_Y_TO, Utils.readOneLine(Paths.T2W_Y_TO))
-                .putBoolean(PrefKeys.T2W, !Utils.readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
+                .putBoolean(PrefKeys.T2W_PREVENT_SLEEP, !Utils.readOneLine(Paths.T2W_PREVENT_SLEEP).equals("0"))
                 .putString(PrefKeys.CPU_MAX_FREQ, Utils.readOneLine(Paths.CPUINFO_MAX_FREQ))
                 .putString(PrefKeys.CPU_MIN_FREQ, Utils.readOneLine(Paths.CPUINFO_MIN_FREQ))
                 .putBoolean(PrefKeys.ZRAM, Utils.readTextLines(Paths.SWAP_STATE).contains("/dev/block/zram0"))
@@ -311,12 +313,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 else
                                     MainActivity.this.stopService(intent);
                                 break;
+                            case PrefKeys.T2W_PREVENT_SLEEP:
+                                boolean isPreventSleep = preferences.getBoolean(key, false);
+                                if (!isPreventSleep) preferences.edit().putBoolean(PrefKeys.T2W, false).apply();
+                                if (!isPreventSleep) preferences.edit().putBoolean(PrefKeys.T2W_S2W, false).apply();
+                                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, isPreventSleep ? "1" : "0");
+                                break;
+                            case PrefKeys.T2W_S2W:
+                                Utils.writeFileWithRoot(Paths.T2W_S2W_ENABLE, preferences.getBoolean(key, false) ? "1" : "0");
+                                break;
                             case PrefKeys.T2W:
                                 boolean isT2w = preferences.getBoolean(key, false);
                                 if (!isT2w) preferences.edit().putBoolean(PrefKeys.T2W_AUTO, false).apply();
-                                String t2wString = (isT2w ? "1" : "0");
-                                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, t2wString);
-                                Utils.writeFileWithRoot(Paths.T2W_ENABLE, t2wString);
+                                Utils.writeFileWithRoot(Paths.T2W_ENABLE, isT2w ? "1" : "0");
                                 break;
                             case PrefKeys.T2W_INTERAL:
                                 int interval = preferences.getInt(key, 20);

@@ -9,6 +9,7 @@ public interface Paths {
     
     String TOUCHSCREEN_SYS_DIR = "/sys/class/input/input2/";
     String T2W_PREVENT_SLEEP = TOUCHSCREEN_SYS_DIR + "prevent_sleep";
+    String T2W_S2W_ENABLE = TOUCHSCREEN_SYS_DIR + "s2w_enable";
     String T2W_ENABLE = TOUCHSCREEN_SYS_DIR + "tap2wake_enable";
     String T2W_INTERVAL = TOUCHSCREEN_SYS_DIR + "tap2wake_interval";
     String T2W_X_FROM = TOUCHSCREEN_SYS_DIR + "tap2wake_x_from";

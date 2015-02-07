@@ -13,11 +13,11 @@
     <string name="dialog_initialization_title">初始化</string>
     <string name="dialog_getting_root_failed_title">Kernel Hacker 无法使用</string>
     <string name="dialog_getting_root_failed_msg">无法获取Root权限</string>
-    <string name="notifition_boot_no_shutdown_title">异常关机导致设置没有在启动时改变</string>
-    <string name="notifition_boot_kernel_changed_title">内核版本改变设置没有在启动时改变</string>
+    <string name="notifition_boot_no_shutdown_title">由于异常关机, 内核数据没有设置</string>
+    <string name="notifition_boot_kernel_changed_title">由于内核版本改变, 内核数据没有设置</string>
     <string name="notifition_boot_setting_failed_title">设定开机生效失败</string>
     <string name="notifition_boot_setting_failed_text">触摸以进入KernelHacker</string>
-    <string name="re_boot_set_title">使用原始的的设置？</string>
+    <string name="re_boot_set_title">使用原来的的的设置？</string>
     <string name="re_boot_set_content">可能会导致设备不稳定.</string>
     <string name="info_cpu_time_in_state">CPU频率统计</string>
     <string name="info_kernel_version">内核版本</string>
@@ -47,7 +47,10 @@
     <string name="common_pref_io_read_ahead_size_summary">SD 卡缓存大小: %1$skb</string>
     <string name="common_io_scheduler_title">IO调度策略</string>
     <string name="common_io_scheduler_summary">当前的IO调度策略: %1$s</string>
-    <string name="feature_t2w_title">双击亮屏</string>
+    <string name="feature_t2w_title">触摸亮屏</string>
+    <string name="feature_t2w_prevent_sleep_title">阻止休眠</string>
+    <string name="feature_t2w_s2w_title">滑动亮屏</string>
+    <string name="feature_dt2w_title">双击亮屏</string>
     <string name="feature_t2w_auto_title">防误触</string>
     <string name="feature_t2w_auto_summury">当距离传感器被激活时关闭触摸亮屏</string>
     <string name="feature_t2w_interval_title">两次触摸间隔时间</string>

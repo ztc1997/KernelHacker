@@ -9,6 +9,8 @@ public interface PrefKeys {
     String KERNEL_VERSION = "pref_kernel_version";
     
     String T2W = "pref_t2w";
+    String T2W_PREVENT_SLEEP = "pref_t2w_prevent_sleep";
+    String T2W_S2W = "pref_t2w_s2w";
     String T2W_AUTO = "pref_t2w_auto";
     String T2W_INTERAL = "pref_t2w_interval";
     String T2W_RANGE_X_FROM = "pref_t2w_range_x_from";

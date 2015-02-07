@@ -47,7 +47,10 @@
     <string name="common_pref_io_read_ahead_size_summary">Current size: %1$skb</string>
     <string name="common_io_scheduler_title">IO Scheduler</string>
     <string name="common_io_scheduler_summary">Current IO scheduler: %1$s</string>
-    <string name="feature_t2w_title">Tap To Wake</string>
+    <string name="feature_t2w_title">Touch To Wake</string>
+    <string name="feature_t2w_prevent_sleep_title">Prevent Sleep</string>
+    <string name="feature_t2w_s2w_title">Sweep To Wake</string>
+    <string name="feature_dt2w_title">Double Tap To Wake</string>
     <string name="feature_t2w_auto_title">Anti False Touch</string>
     <string name="feature_t2w_auto_summury">Turn off tap to wake when proximity sensor activated</string>
     <string name="feature_t2w_interval_title">Interval Time</string>

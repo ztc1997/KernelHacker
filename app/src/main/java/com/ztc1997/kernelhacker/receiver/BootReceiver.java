@@ -78,8 +78,9 @@ public class BootReceiver extends BroadcastReceiver {
                     showNotifition(context, R.string.notifition_boot_setting_failed_title, R.string.notifition_boot_setting_failed_text);
                     return;
                 }
-                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, i);
-                Utils.writeFileWithRoot(Paths.T2W_ENABLE, i);
+                Utils.writeFileWithRoot(Paths.T2W_PREVENT_SLEEP, (preferences.getBoolean(PrefKeys.T2W_PREVENT_SLEEP, false) ? 1 : 0) + "");
+                Utils.writeFileWithRoot(Paths.T2W_S2W_ENABLE, (preferences.getBoolean(PrefKeys.T2W_S2W, false) ? 1 : 0) + "");
+                Utils.writeFileWithRoot(Paths.T2W_ENABLE, (preferences.getBoolean(PrefKeys.T2W, false) ? 1 : 0) + "");
                 Utils.writeFileWithRoot(Paths.T2W_INTERVAL, preferences.getInt(PrefKeys.T2W_INTERAL, 20) + "");
                 Utils.writeFileWithRoot(Paths.T2W_X_FROM, preferences.getString(PrefKeys.T2W_RANGE_X_FROM, "0"));
                 Utils.writeFileWithRoot(Paths.T2W_Y_FROM, preferences.getString(PrefKeys.T2W_RANGE_Y_FROM, "0"));

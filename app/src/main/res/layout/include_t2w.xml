@@ -14,14 +14,30 @@
         <TextView
             style="@style/CardTitleTextView"
             android:text="@string/feature_t2w_title"/>
+
+        <com.ztc1997.kernelhacker.view.PreferenceSwitchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/t2w_prevent_sleep"
+            app:pv_title="@string/feature_t2w_prevent_sleep_title"
+            app:pv_key="pref_t2w_prevent_sleep"
+            app:pv_dependency="support_t2w"/>
+
+        <com.ztc1997.kernelhacker.view.PreferenceSwitchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/t2w_s2w"
+            app:pv_title="@string/feature_t2w_s2w_title"
+            app:pv_key="pref_t2w_s2w"
+            app:pv_dependency="pref_t2w_prevent_sleep"/>
         
         <com.ztc1997.kernelhacker.view.PreferenceSwitchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/t2w_switch"
-            app:pv_title="@string/feature_t2w_title"
+            app:pv_title="@string/feature_dt2w_title"
             app:pv_key="pref_t2w"
-            app:pv_dependency="support_t2w"/>
+            app:pv_dependency="pref_t2w_prevent_sleep"/>
 
         <com.ztc1997.kernelhacker.view.PreferenceSwitchView
             android:layout_width="match_parent"
